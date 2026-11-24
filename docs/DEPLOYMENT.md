@@ -40,6 +40,14 @@ In production, a form only reports success after it has been **stored** or **ema
 ### Admin inbox
 Set `ADMIN_PASSWORD` (a long random string) and optionally `ADMIN_USER`. Then open `/admin`. Without a password, `/admin` returns 404.
 
+## 4b. Turn on the AI parts of the free tools (optional)
+1. Create an API key at console.anthropic.com and set a monthly spend limit there.
+2. Create a free Redis database at upstash.com → copy the REST URL and token.
+3. In Vercel set `ANTHROPIC_API_KEY`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (and optionally `TOOLS_AI_DAILY_LIMIT`, `TOOLS_PER_VISITOR_DAILY`).
+4. Redeploy. Run one audit and one plan yourself and read the output before sharing the tools.
+
+Without these, the Website Audit still works (measured checks only) and the Planner shows as unavailable.
+
 ## 5. Custom domain
 1. Vercel → Project → Settings → Domains → add your domain, then follow the DNS instructions.
 2. Set `NEXT_PUBLIC_SITE_URL=https://your-domain.com` and redeploy. This updates canonical URLs, the sitemap, Open Graph links and structured data.
@@ -49,8 +57,9 @@ Set `ADMIN_PASSWORD` (a long random string) and optionally `ADMIN_USER`. Then op
 Replace `public/files/Abdelrahman-Ayman-Samir-Elsayed-CV.pdf` (same filename) and redeploy. `/cv` always points to it.
 
 ## 7. Verify after each deploy
-- [ ] Every nav link and dropdown item opens the right page; the mobile menu opens and closes.
+- [ ] Every nav link opens the right page in English and Arabic; the language switch keeps you on the same page; the mobile menu opens and closes.
 - [ ] `/cv` downloads the latest PDF.
+- [ ] Run `/tools/website-audit` on your own site and check the report.
 - [ ] Send a test from `/contact`: the success message appears, the row shows in `/admin`, and the email arrives.
 - [ ] Send a test booking from `/book`: the success message says **pending confirmation**, and the status in `/admin` is "Pending confirmation".
 - [ ] `/admin` asks for a password; `/sitemap.xml` and `/robots.txt` use the real domain.

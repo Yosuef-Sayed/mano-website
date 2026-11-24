@@ -26,9 +26,10 @@ The first version is focused on the portfolio, services inquiries, collaboration
 - Auto-replies by inquiry type, tags, follow-up reminders, and Turnstile captcha if spam appears.
 
 ## Arabic version
-- Move UI strings to `src/i18n/{en,ar}.ts` and duplicate content files per locale.
-- Add a `[locale]` route segment with `lang="ar" dir="rtl"`, logical CSS properties (`ps-`/`pe-` instead of `pl-`/`pr-`) and an Arabic body font (e.g. IBM Plex Sans Arabic).
-- Launch only when every page is translated. No partial switch.
+Done (Nov 2026): every page at `/ar/…`, RTL layout, IBM Plex Sans Arabic, localized forms and metadata.
+
+## Free tools
+Built: Website Clarity & SEO Audit, Project Idea Planner. Next: Pitch Deck Clarity Review (see `docs/TOOLS-SPEC.md`).
 
 ## Other possibilities
 Testimonials (only real, with permission), workshop registration, speaking materials, a newsletter and digital products.

@@ -2,32 +2,36 @@
 
 import Link from "next/link";
 import { useRef, type KeyboardEvent } from "react";
-import { dimensions, type DimensionId } from "@/content/valueLoop";
+import type { Content } from "@/content";
+import type { DimensionId } from "@/content/types";
+import { lh, type Lang } from "@/i18n/config";
 import { ArrowRight, Chevron } from "../Icons";
 
+type Dim = Content["dimensions"][number];
+type LoopText = Content["home"]["loop"];
+
 const R = 37; // ring radius in viewBox units
-const pos = dimensions.map((_, i) => {
+const pos = [0, 1, 2, 3, 4].map((i) => {
   const a = (-90 + i * 72) * (Math.PI / 180);
   return { x: 50 + R * Math.cos(a), y: 50 + R * Math.sin(a) };
 });
 
-function Panel({ id }: { id: DimensionId }) {
-  const d = dimensions.find((x) => x.id === id)!;
+function Panel({ d, t, lang }: { d: Dim; t: LoopText; lang: Lang }) {
   return (
     <div>
       <p className="eyebrow">{d.label}</p>
       <p className="h-display mt-2 text-2xl sm:text-3xl">{d.question}</p>
       <p className="mt-3 text-paper/80">{d.summary}</p>
-      <ul className="mt-4 flex flex-wrap gap-2" aria-label={`${d.label} areas`}>
+      <ul className="mt-4 flex flex-wrap gap-2" aria-label={`${d.label} — ${t.areas}`}>
         {d.areas.map((a) => (
           <li key={a} className="chip">{a}</li>
         ))}
       </ul>
-      <p className="mt-6 text-xs font-semibold tracking-[0.2em] text-muted uppercase">Evidence</p>
+      <p className="mt-6 text-xs font-semibold tracking-[0.2em] text-muted uppercase">{t.evidence}</p>
       <ul className="mt-2 divide-y divide-line">
         {d.evidence.map((e) => (
           <li key={e.label}>
-            <Link href={e.href} className="group flex items-center justify-between gap-4 py-3">
+            <Link href={lh(lang, e.href)} className="group flex items-center justify-between gap-4 py-3">
               <span>
                 <span className="block font-semibold text-paper transition group-hover:text-teal">{e.label}</span>
                 <span className="block text-sm text-muted">{e.detail}</span>
@@ -41,9 +45,10 @@ function Panel({ id }: { id: DimensionId }) {
   );
 }
 
-export function ValueLoop({ selected, onSelect }: { selected: DimensionId; onSelect: (id: DimensionId) => void }) {
+export function ValueLoop({ selected, onSelect, dimensions, t, lang }: { selected: DimensionId; onSelect: (id: DimensionId) => void; dimensions: Dim[]; t: LoopText; lang: Lang }) {
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const idx = dimensions.findIndex((d) => d.id === selected);
+  const sel = dimensions[idx] ?? dimensions[0];
 
   function onKey(e: KeyboardEvent<HTMLButtonElement>, i: number) {
     const n = dimensions.length;
@@ -54,7 +59,7 @@ export function ValueLoop({ selected, onSelect }: { selected: DimensionId; onSel
     if (e.key === "End") next = n - 1;
     if (next >= 0) {
       e.preventDefault();
-      onSelect(dimensions[next].id);
+      onSelect(dimensions[next].id as DimensionId);
       tabs.current[next]?.focus();
     }
   }
@@ -62,7 +67,7 @@ export function ValueLoop({ selected, onSelect }: { selected: DimensionId; onSel
   return (
     <>
       {/* Desktop / tablet: connected loop */}
-      <div className="hidden items-center gap-12 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+      <div dir="ltr" className="hidden items-center gap-12 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
         <div className="relative mx-auto aspect-square w-full max-w-[500px]">
           <svg viewBox="0 0 100 100" className="absolute inset-0 size-full" aria-hidden="true">
             <defs>
@@ -88,10 +93,10 @@ export function ValueLoop({ selected, onSelect }: { selected: DimensionId; onSel
             ))}
           </svg>
           <div className="absolute left-1/2 top-1/2 flex size-[30%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-teal/40 bg-ink/80 text-center shadow-[0_0_60px_-10px_rgba(20,184,166,.5)]">
-            <span className="text-[10px] font-semibold tracking-[0.2em] text-teal uppercase">Outcome</span>
-            <span className="h-display mt-1 text-base leading-tight lg:text-lg">Real-World<br />Value</span>
+            <span className="text-[10px] font-semibold tracking-[0.2em] text-teal uppercase">{t.outcome}</span>
+            <span className="h-display mt-1 max-w-[80%] text-base leading-tight lg:text-lg">{t.value}</span>
           </div>
-          <div role="tablist" aria-label="MANO Value Loop dimensions" aria-orientation="horizontal">
+          <div role="tablist" aria-label={t.tablistLabel} aria-orientation="horizontal">
             {dimensions.map((d, i) => {
               const on = d.id === selected;
               return (
@@ -103,7 +108,7 @@ export function ValueLoop({ selected, onSelect }: { selected: DimensionId; onSel
                   aria-selected={on}
                   aria-controls="vl-panel"
                   tabIndex={on ? 0 : -1}
-                  onClick={() => onSelect(d.id)}
+                  onClick={() => onSelect(d.id as DimensionId)}
                   onKeyDown={(e) => onKey(e, i)}
                   style={{ left: `${pos[i].x}%`, top: `${pos[i].y}%` }}
                   className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full border px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition duration-300 ${
@@ -116,25 +121,25 @@ export function ValueLoop({ selected, onSelect }: { selected: DimensionId; onSel
             })}
           </div>
         </div>
-        <div id="vl-panel" role="tabpanel" aria-labelledby={`vl-tab-${selected}`} className="card min-h-[420px] p-6 lg:p-8" aria-live="polite">
-          <Panel id={selected} />
+        <div id="vl-panel" role="tabpanel" dir={lang === "ar" ? "rtl" : "ltr"} aria-labelledby={`vl-tab-${selected}`} className="card min-h-[420px] p-6 lg:p-8" aria-live="polite">
+          <Panel d={sel} t={t} lang={lang} />
         </div>
       </div>
 
       {/* Mobile: vertical connected stepper */}
-      <ol className="relative md:hidden" aria-label="MANO Value Loop dimensions">
-        <span aria-hidden className="absolute bottom-6 left-[15px] top-6 w-px bg-gradient-to-b from-teal/60 via-line to-amber/50" />
+      <ol className="relative md:hidden" aria-label={t.tablistLabel}>
+        <span aria-hidden className="absolute bottom-6 start-[15px] top-6 w-px bg-gradient-to-b from-teal/60 via-line to-amber/50" />
         {dimensions.map((d) => {
           const on = d.id === selected;
           return (
-            <li key={d.id} className="relative pl-12">
-              <span aria-hidden className={`absolute left-[9px] top-[22px] size-[13px] rounded-full border-2 transition ${on ? "border-teal bg-teal" : "border-paper/30 bg-ink"}`} />
+            <li key={d.id} className="relative ps-12">
+              <span aria-hidden className={`absolute start-[9px] top-[22px] size-[13px] rounded-full border-2 transition ${on ? "border-teal bg-teal" : "border-paper/30 bg-ink"}`} />
               <button
                 type="button"
                 aria-expanded={on}
                 aria-controls={`vl-m-${d.id}`}
-                onClick={() => onSelect(d.id)}
-                className="flex w-full items-center justify-between py-4 text-left"
+                onClick={() => onSelect(d.id as DimensionId)}
+                className="flex w-full items-center justify-between py-4 text-start"
               >
                 <span>
                   <span className={`block text-lg font-bold ${on ? "text-teal" : ""}`}>{d.label}</span>
@@ -143,15 +148,15 @@ export function ValueLoop({ selected, onSelect }: { selected: DimensionId; onSel
                 <Chevron className={`size-5 shrink-0 transition ${on ? "rotate-180 text-teal" : "text-muted"}`} />
               </button>
               <div id={`vl-m-${d.id}`} hidden={!on} className="card mb-4 p-5">
-                <Panel id={d.id} />
+                <Panel d={d} t={t} lang={lang} />
               </div>
             </li>
           );
         })}
-        <li className="relative pl-12 pt-2">
-          <span aria-hidden className="absolute left-[7px] top-[14px] size-[17px] rounded-full border-2 border-amber bg-amber/30" />
-          <p className="text-lg font-bold text-amber">Real-World Value</p>
-          <p className="text-sm text-muted">Where the five perspectives meet.</p>
+        <li className="relative ps-12 pt-2">
+          <span aria-hidden className="absolute start-[7px] top-[14px] size-[17px] rounded-full border-2 border-amber bg-amber/30" />
+          <p className="text-lg font-bold text-amber">{t.value}</p>
+          <p className="text-sm text-muted">{t.valueNote}</p>
         </li>
       </ol>
     </>

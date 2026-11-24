@@ -167,3 +167,26 @@ body {
     transform: none;
   }
 }
+
+/* ───────────────── Arabic / RTL ───────────────── */
+:root[lang="ar"] body {
+  font-family: var(--font-arabic-body), var(--font-inter), ui-sans-serif, sans-serif;
+}
+:root[lang="ar"] .font-display,
+:root[lang="ar"] .h-display {
+  font-family: var(--font-arabic-body), var(--font-archivo), ui-sans-serif, sans-serif;
+  letter-spacing: 0;
+}
+/* Wide letter-spacing breaks Arabic letter joining. */
+:root[lang="ar"] [class*="tracking-"],
+:root[lang="ar"] .eyebrow {
+  letter-spacing: 0;
+}
+:root[lang="ar"] .lead,
+:root[lang="ar"] p {
+  line-height: 1.85;
+}
+/* Latin-only brand marks keep their style inside Arabic pages. */
+.latin {
+  font-family: var(--font-inter), ui-sans-serif, sans-serif;
+}

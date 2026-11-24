@@ -1,7 +1,7 @@
 # MANO — Business × Technology
 
 Personal brand and portfolio website for **Abdelrahman Ayman Samir Elsayed (MANO)**.
-Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4 and Zod.
+Bilingual (English / Arabic, RTL). Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Zod and the Anthropic SDK.
 
 ## Quick start
 
@@ -21,17 +21,19 @@ npm run lint
 
 | Path | Purpose |
 |---|---|
-| `src/config/site.ts` | Name, email, social links, CV path, domain, navigation |
-| `src/content/*.ts` | All page content: experience, projects, services, Value Loop, MANO content |
-| `src/app/*` | Pages (`/`, `/about`, `/experience`, `/projects`, `/projects/athathi`, `/services`, `/speaking`, `/collaborate`, `/book`, `/contact`, `/privacy`) |
+| `src/config/site.ts` | Name, email, social links, CV path, domain |
+| `src/content/en.ts`, `src/content/ar.ts` | Every visible word, in English and Arabic |
+| `src/app/[lang]/*` | Pages, served at `/…` (English) and `/ar/…` (Arabic) via `src/proxy.ts` |
+| `src/app/api/tools/*`, `src/lib/tools/*` | Free tools: SSRF-safe fetcher, checks, Claude calls, limits |
 | `src/app/api/forms/[type]` | Form endpoint: validation, spam checks, storage, email |
-| `src/app/admin` | Private inbox (HTTP Basic auth, off unless `ADMIN_PASSWORD` is set) |
+| `src/app/[lang]/admin` | Private inbox (HTTP Basic auth, off unless `ADMIN_PASSWORD` is set) |
 | `src/lib` | Storage (Supabase / local file), email (Resend), rate limiting, schemas |
 | `public/files/…CV.pdf` | The CV served at `/cv` |
 
 ## Docs
 
-- [docs/CONTENT-GUIDE.md](docs/CONTENT-GUIDE.md) — how to update the CV, experience, projects, services, links and booking settings
+- [CONTENT_GUIDE.md](CONTENT_GUIDE.md) — how to update text (English + Arabic), experience, timeline, projects, certificates, topics, links, CV and tools
+- [docs/TOOLS-SPEC.md](docs/TOOLS-SPEC.md) — free tools: specification, security and costs
 - [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — environment variables, Supabase/Resend setup, deploying, custom domain, verification checklist
 - [docs/DESIGN-SYSTEM.md](docs/DESIGN-SYSTEM.md) — tokens, typography, components, interaction rules
 - [docs/ROADMAP.md](docs/ROADMAP.md) — calendar sync, payments, admin and other future features

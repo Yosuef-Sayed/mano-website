@@ -34,7 +34,7 @@ export const statusNames: Record<SubmissionStatus, string> = {
 
 export type Submission = {
   id: string;
-  type: FormType;
+  type: string;
   status: SubmissionStatus;
   data: Record<string, unknown>;
   created_at: string;

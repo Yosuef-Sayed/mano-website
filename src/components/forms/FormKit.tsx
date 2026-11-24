@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { createContext, useContext, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { fieldErrors, schemas, type FormType } from "@/lib/forms/schemas";
+import { fieldErrors, makeSchemas, type FormType } from "@/lib/forms/schemas";
+import type { Content } from "@/content";
+import { lh, type Lang } from "@/i18n/config";
 import { Check } from "../Icons";
 
-type Ctx = { errors: Record<string, string>; formId: string };
-const FormCtx = createContext<Ctx>({ errors: {}, formId: "f" });
+type F = Content["forms"];
+type Ctx = { errors: Record<string, string>; formId: string; f: F | null; lang: Lang };
+const FormCtx = createContext<Ctx>({ errors: {}, formId: "f", f: null, lang: "en" });
 
 type State = { kind: "idle" } | { kind: "sending" } | { kind: "error"; message: string } | { kind: "done"; ref: string | null };
 
@@ -16,12 +19,16 @@ type State = { kind: "idle" } | { kind: "sending" } | { kind: "error"; message: 
  */
 export function FormShell({
   type,
+  lang,
+  f,
   children,
   submitLabel,
   success,
   extra,
 }: {
   type: FormType;
+  lang: Lang;
+  f: F;
   children: ReactNode;
   submitLabel: string;
   success: (ref: string | null) => ReactNode;
@@ -44,11 +51,11 @@ export function FormShell({
     e.preventDefault();
     const form = e.currentTarget;
     const data = collect(form);
-    const parsed = schemas[type].safeParse(data);
+    const parsed = makeSchemas(f.errors)[type].safeParse({ ...data, lang });
     if (!parsed.success) {
       const errs = fieldErrors(parsed.error);
       setErrors(errs);
-      setState({ kind: "error", message: "Please fix the highlighted fields." });
+      setState({ kind: "error", message: f.fixFields });
       const first = form.querySelector<HTMLElement>(`[name="${Object.keys(errs)[0]}"]`);
       first?.focus();
       return;
@@ -59,7 +66,7 @@ export function FormShell({
       const res = await fetch(`/api/forms/${type}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, startedAt: startedAt.current || undefined }),
+        body: JSON.stringify({ ...data, lang, startedAt: startedAt.current || undefined }),
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
@@ -68,10 +75,10 @@ export function FormShell({
         requestAnimationFrame(() => document.getElementById(`${formId}-done`)?.focus());
       } else {
         if (json.fields) setErrors(json.fields);
-        setState({ kind: "error", message: json.error || "Something went wrong. Please try again." });
+        setState({ kind: "error", message: json.error || f.generic });
       }
     } catch {
-      setState({ kind: "error", message: "Network error — your message was not sent. Please check your connection and try again." });
+      setState({ kind: "error", message: f.network });
     }
   }
 
@@ -80,16 +87,16 @@ export function FormShell({
       <div id={`${formId}-done`} tabIndex={-1} role="status" className="card border-teal/50 p-8 outline-none">
         <span className="inline-flex size-11 items-center justify-center rounded-full bg-teal text-ink"><Check className="size-5" /></span>
         <div className="mt-4 space-y-2 text-paper/85">{success(state.ref)}</div>
-        <button type="button" className="btn btn-secondary mt-6" onClick={() => setState({ kind: "idle" })}>Send another</button>
+        <button type="button" className="btn btn-secondary mt-6" onClick={() => setState({ kind: "idle" })}>{f.sendAnother}</button>
       </div>
     );
   }
 
   return (
-    <FormCtx.Provider value={{ errors, formId }}>
+    <FormCtx.Provider value={{ errors, formId, f, lang }}>
       <form noValidate onSubmit={onSubmit} onFocus={() => { if (!startedAt.current) startedAt.current = Date.now(); }} className="space-y-5" aria-describedby={`${formId}-status`}>
         {/* Honeypot: hidden from people and assistive tech. */}
-        <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <div aria-hidden="true" className="absolute -start-[9999px] h-0 w-0 overflow-hidden">
           <label>Website<input type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" /></label>
         </div>
         {children}
@@ -98,7 +105,7 @@ export function FormShell({
           {state.kind === "error" && <p className="rounded-xl border border-red-400/40 bg-red-400/10 px-4 py-3 text-red-200">{state.message}</p>}
         </div>
         <button type="submit" className="btn btn-primary w-full sm:w-auto" disabled={state.kind === "sending"} aria-disabled={state.kind === "sending"}>
-          {state.kind === "sending" ? "Sending…" : submitLabel}
+          {state.kind === "sending" ? f.sending : submitLabel}
         </button>
       </form>
     </FormCtx.Provider>
@@ -106,15 +113,15 @@ export function FormShell({
 }
 
 function Consent() {
-  const { errors, formId } = useContext(FormCtx);
+  const { errors, formId, f, lang } = useContext(FormCtx);
   const id = `${formId}-consent`;
   return (
     <div>
       <label htmlFor={id} className="flex items-start gap-3 text-sm text-paper/80">
         <input id={id} name="consent" type="checkbox" className="mt-1 size-4 accent-teal" aria-invalid={!!errors.consent} aria-describedby={errors.consent ? `${id}-err` : undefined} />
         <span>
-          I agree that the details I share are used only to reply to this request. They are not sold or shared. See the{" "}
-          <Link href="/privacy" className="link">privacy notice</Link>.
+          {f?.consent}{" "}
+          <Link href={lh(lang, "/privacy")} className="link">{f?.privacyLink}</Link>.
         </span>
       </label>
       {errors.consent && <p id={`${id}-err`} className="mt-1 text-sm text-red-300">{errors.consent}</p>}
@@ -125,14 +132,14 @@ function Consent() {
 type FieldProps = { name: string; label: string; hint?: string; required?: boolean; className?: string };
 
 function Wrap({ name, label, hint, required, className = "", children }: FieldProps & { children: (a: Record<string, unknown>) => ReactNode }) {
-  const { errors, formId } = useContext(FormCtx);
+  const { errors, formId, f } = useContext(FormCtx);
   const id = `${formId}-${name}`;
   const err = errors[name];
   const describedBy = [hint ? `${id}-hint` : "", err ? `${id}-err` : ""].filter(Boolean).join(" ") || undefined;
   return (
     <div className={className}>
       <label htmlFor={id} className="block text-sm font-semibold">
-        {label} {required ? <span className="text-teal" aria-hidden>*</span> : <span className="font-normal text-muted">(optional)</span>}
+        {label} {required ? <span className="text-teal" aria-hidden>*</span> : <span className="font-normal text-muted">{f?.optional}</span>}
       </label>
       {hint && <p id={`${id}-hint`} className="mt-0.5 text-xs text-muted">{hint}</p>}
       <div className="mt-2">{children({ id, name, "aria-invalid": !!err, "aria-describedby": describedBy, "aria-required": required || undefined })}</div>
@@ -148,6 +155,7 @@ export function TextField(p: FieldProps & { type?: string; autoComplete?: string
         <input
           {...a}
           type={p.type ?? "text"}
+          dir={p.type === "url" || p.type === "email" ? "ltr" : undefined}
           autoComplete={p.autoComplete}
           placeholder={p.placeholder}
           defaultValue={p.defaultValue}

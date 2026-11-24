@@ -1,11 +1,12 @@
 type P = { className?: string };
 const base = { fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
 
+/** Directional arrows mirror automatically in right-to-left pages. */
 export const ArrowRight = ({ className = "size-4" }: P) => (
-  <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...base}><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+  <svg viewBox="0 0 24 24" className={`${className} rtl:-scale-x-100`} aria-hidden="true" {...base}><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 );
 export const ArrowUpRight = ({ className = "size-4" }: P) => (
-  <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...base}><path d="M7 17 17 7M8 7h9v9" /></svg>
+  <svg viewBox="0 0 24 24" className={`${className} rtl:-scale-x-100`} aria-hidden="true" {...base}><path d="M7 17 17 7M8 7h9v9" /></svg>
 );
 export const Download = ({ className = "size-4" }: P) => (
   <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...base}><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14" /></svg>
@@ -53,4 +54,10 @@ export const YouTube = ({ className = "size-4" }: P) => (
   <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="currentColor">
     <path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15V9l5.2 3-5.2 3Z" />
   </svg>
+);
+export const Globe = ({ className = "size-4" }: P) => (
+  <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...base}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3Z" /></svg>
+);
+export const FileIcon = ({ className = "size-4" }: P) => (
+  <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...base}><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z" /><path d="M14 3v5h5" /></svg>
 );

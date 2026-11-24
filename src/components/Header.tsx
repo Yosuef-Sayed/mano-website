@@ -2,77 +2,31 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { nav, site } from "@/config/site";
-import { Chevron, Close, Menu } from "./Icons";
+import { useEffect, useState } from "react";
+import { site } from "@/config/site";
+import { basePath, lh, switchHref, type Lang } from "@/i18n/config";
+import type { Content } from "@/content";
+import { Close, Globe, Menu } from "./Icons";
 import { Logo } from "./Logo";
 
-type NavItem = (typeof nav)[number];
-
-function isActive(path: string, item: NavItem) {
-  if ("children" in item && item.children) return item.children.some((c) => path === c.href || path.startsWith(c.href + "/"));
-  return path === item.href || path.startsWith(item.href + "/");
-}
-
-function Dropdown({ item, path }: { item: Extract<NavItem, { children: unknown }>; path: string }) {
+export function Header({ lang, ui }: { lang: Lang; ui: Content["ui"] }) {
+  const rawPath = usePathname() || "/";
+  const path = basePath(rawPath);
   // Open state is tied to the path it was opened on, so navigating closes it automatically.
   const [openAt, setOpenAt] = useState<string | null>(null);
-  const open = openAt === path;
-  const setOpen = (v: boolean | ((o: boolean) => boolean)) =>
-    setOpenAt((cur) => ((typeof v === "function" ? v(cur === path) : v) ? path : null));
-  const ref = useRef<HTMLLIElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const onDoc = (e: MouseEvent) => !ref.current?.contains(e.target as Node) && setOpenAt(null);
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenAt(null);
-    document.addEventListener("mousedown", onDoc);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDoc);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
-  const id = `menu-${item.label.toLowerCase()}`;
-  return (
-    <li ref={ref} className="relative" onMouseLeave={() => setOpen(false)}>
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls={id}
-        onClick={() => setOpen((o) => !o)}
-        onMouseEnter={() => setOpen(true)}
-        className={`flex items-center gap-1 rounded-full px-3 py-2 text-sm transition hover:text-teal ${isActive(path, item) ? "text-teal" : "text-paper/80"}`}
-      >
-        {item.label}
-        <Chevron className={`size-3.5 transition ${open ? "rotate-180" : ""}`} />
-      </button>
-      <div id={id} hidden={!open} className="absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-2">
-        <ul className="card overflow-hidden bg-navy/95 p-2 shadow-2xl backdrop-blur">
-          {item.children.map((c) => (
-            <li key={c.href}>
-              <Link
-                href={c.href}
-                aria-current={path === c.href ? "page" : undefined}
-                className="block rounded-xl px-4 py-3 transition hover:bg-paper/5 aria-[current=page]:bg-teal/10"
-              >
-                <span className="block text-sm font-semibold">{c.label}</span>
-                <span className="block text-xs text-muted">{c.note}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </li>
-  );
-}
-
-export function Header() {
-  const path = usePathname() || "/";
-  const [openAt, setOpenAt] = useState<string | null>(null);
-  const open = openAt === path;
-  const setOpen = (v: boolean | ((o: boolean) => boolean)) =>
-    setOpenAt((cur) => ((typeof v === "function" ? v(cur === path) : v) ? path : null));
+  const open = openAt === rawPath;
   const [scrolled, setScrolled] = useState(false);
+
+  const items = [
+    { label: ui.nav.about, href: "/about" },
+    { label: ui.nav.experience, href: "/experience" },
+    { label: ui.nav.projects, href: "/projects" },
+    { label: ui.nav.speaking, href: "/speaking" },
+    { label: ui.nav.tools, href: "/tools" },
+    { label: ui.nav.contact, href: "/contact" },
+  ];
+  const active = (href: string) => path === href || path.startsWith(href + "/");
+  const other: Lang = lang === "ar" ? "en" : "ar";
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
@@ -87,96 +41,83 @@ export function Header() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  return (
-    <header
-      className={`sticky top-0 z-40 transition-colors duration-300 ${scrolled || open ? "border-b border-line bg-ink/85 backdrop-blur-md" : "bg-transparent"}`}
+  const langLink = (
+    <Link
+      href={switchHref(rawPath, other)}
+      hrefLang={other}
+      lang={other}
+      aria-label={ui.langAria}
+      className="btn btn-ghost gap-1.5 whitespace-nowrap px-2.5"
     >
-      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-teal focus:px-4 focus:py-2 focus:text-ink">
-        Skip to content
+      <Globe /> <span className={`${other === "en" ? "latin" : ""} xl:hidden 2xl:inline`}>{ui.langName}</span>
+    </Link>
+  );
+
+  return (
+    <header className={`sticky top-0 z-40 transition-colors duration-300 ${scrolled || open ? "border-b border-line bg-ink/85 backdrop-blur-md" : "bg-transparent"}`}>
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-teal focus:px-4 focus:py-2 focus:text-ink">
+        {ui.skip}
       </a>
-      <div className="container-x flex h-16 items-center justify-between gap-4 lg:h-20">
-        <Link href="/" aria-label={`${site.brand} home`} className="shrink-0">
+      <div className="container-x flex h-16 items-center justify-between gap-3 lg:h-20">
+        <Link href={lh(lang, "/")} aria-label={`${site.brand} — ${ui.nav.home}`} className="shrink-0">
           <Logo />
         </Link>
 
-        <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
-            <li>
-              <Link href="/" aria-current={path === "/" ? "page" : undefined} className={`rounded-full px-3 py-2 text-sm transition hover:text-teal ${path === "/" ? "text-teal" : "text-paper/80"}`}>
-                Home
-              </Link>
-            </li>
-            {nav.map((item) =>
-              "children" in item && item.children ? (
-                <Dropdown key={item.label} item={item} path={path} />
-              ) : (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={isActive(path, item) ? "page" : undefined}
-                    className={`rounded-full px-3 py-2 text-sm transition hover:text-teal ${isActive(path, item) ? "text-teal" : "text-paper/80"}`}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ),
-            )}
+        <nav aria-label="Main" className="hidden xl:block">
+          <ul className="flex items-center gap-0.5">
+            {items.map((it) => (
+              <li key={it.href}>
+                <Link
+                  href={lh(lang, it.href)}
+                  aria-current={active(it.href) ? "page" : undefined}
+                  className={`whitespace-nowrap rounded-full px-2.5 py-2 text-sm transition hover:text-teal ${active(it.href) ? "text-teal" : "text-paper/80"}`}
+                >
+                  {it.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
-          <a href={site.cv.path} className="btn btn-ghost" download>
-            CV
-          </a>
-          <Link href="/book" className="btn btn-primary">
-            Book a Session
-          </Link>
+        <div className="hidden items-center gap-1 xl:flex">
+          {langLink}
+          <a href={site.cv.path} className="btn btn-ghost whitespace-nowrap px-2.5" download>{ui.cv}</a>
+          <Link href={lh(lang, "/contact?intent=hiring")} className="btn btn-primary whitespace-nowrap px-4">{ui.discuss}</Link>
         </div>
 
-        <button
-          type="button"
-          className="-mr-2 inline-flex size-11 items-center justify-center rounded-full text-paper lg:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((o) => !o)}
-        >
-          {open ? <Close /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-1 xl:hidden">
+          {langLink}
+          <button
+            type="button"
+            className="-me-2 inline-flex size-11 items-center justify-center rounded-full text-paper"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? ui.menuClose : ui.menuOpen}
+            onClick={() => setOpenAt(open ? null : rawPath)}
+          >
+            {open ? <Close /> : <Menu />}
+          </button>
+        </div>
       </div>
 
-      <div id="mobile-nav" hidden={!open} className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-ink lg:hidden">
+      <div id="mobile-nav" hidden={!open} className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-ink xl:hidden">
         <nav aria-label="Mobile" className="container-x py-6">
           <ul className="space-y-1">
-            <li>
-              <Link href="/" className="block rounded-xl px-3 py-3 text-lg font-semibold">Home</Link>
-            </li>
-            {nav.map((item) =>
-              "children" in item && item.children ? (
-                <li key={item.label} className="pt-3">
-                  <p className="eyebrow px-3 pb-1">{item.label}</p>
-                  <ul>
-                    {item.children.map((c) => (
-                      <li key={c.href}>
-                        <Link href={c.href} aria-current={path === c.href ? "page" : undefined} className="block rounded-xl px-3 py-3 text-lg font-semibold aria-[current=page]:text-teal">
-                          {c.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ) : (
-                <li key={item.href}>
-                  <Link href={item.href} aria-current={isActive(path, item) ? "page" : undefined} className="block rounded-xl px-3 py-3 text-lg font-semibold aria-[current=page]:text-teal">
-                    {item.label}
-                  </Link>
-                </li>
-              ),
-            )}
+            {[{ label: ui.nav.home, href: "/" }, ...items].map((it) => (
+              <li key={it.href}>
+                <Link
+                  href={lh(lang, it.href)}
+                  aria-current={(it.href === "/" ? path === "/" : active(it.href)) ? "page" : undefined}
+                  className="block rounded-xl px-3 py-3 text-lg font-semibold aria-[current=page]:text-teal"
+                >
+                  {it.label}
+                </Link>
+              </li>
+            ))}
           </ul>
           <div className="mt-8 grid gap-3">
-            <Link href="/book" className="btn btn-primary w-full">Book a Session</Link>
-            <a href={site.cv.path} download className="btn btn-secondary w-full">Download CV</a>
+            <Link href={lh(lang, "/contact?intent=hiring")} className="btn btn-primary w-full">{ui.discuss}</Link>
+            <a href={site.cv.path} download className="btn btn-secondary w-full">{ui.downloadCv}</a>
           </div>
         </nav>
       </div>

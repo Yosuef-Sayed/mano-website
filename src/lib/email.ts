@@ -55,6 +55,6 @@ export async function acknowledgeVisitor(type: FormType, data: Record<string, un
       <p>${booking
         ? "Thanks for your session request. It is <b>not confirmed yet</b>: I'll review it and reply by email to confirm a time (or suggest another one)."
         : "Thanks for reaching out. I've received your message and will reply by email."}</p>
-      <p>— ${esc(site.shortName)} (${site.brand})</p></div>`,
+      <p>— ${esc(site.publicName)}</p></div>`,
   });
 }

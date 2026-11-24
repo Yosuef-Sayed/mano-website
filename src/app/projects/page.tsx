@@ -4,7 +4,7 @@ import { CtaBand, PageHero } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "ATHATHI, MASROOFY, MANOPIX, MANOFY, MANO GAMEBOARD and machine learning coursework — purpose, role, technology and honest status.",
+  description: "ATHATHI, MASROOFY, MANOPIX, MANOFY and MANO GAMEBOARD — purpose, role, technology and honest status.",
   alternates: { canonical: "/projects" },
 };
 

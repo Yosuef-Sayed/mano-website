@@ -34,24 +34,25 @@ export type Service = {
 export const services: Service[] = [
   {
     id: "idea-clarity",
-    title: "Project & Idea Clarity Session",
-    status: "pilot",
-    forWho: ["CS students", "Graduation project teams", "Early-stage founders", "Freelancers"],
+    title: "Project & Startup Clarity Session",
+    status: "published",
+    forWho: ["Graduation project teams", "Fresh graduates", "Early founders", "People exploring an idea"],
     problem: "You have an idea or project, but the problem, the users or the first step are still blurry.",
     includes: [
-      "Clarifying the problem and who actually has it",
-      "Exploring possible solutions, and whether technology or AI is relevant",
-      "Defining a reasonable first scope",
-      "Agreeing practical next steps",
+      "Problem definition and intended users",
+      "Scope for a realistic first version",
+      "Customer discovery and early validation",
+      "Technical and business considerations",
+      "Practical next steps",
     ],
     outcome: "A clearer problem statement, target user and next-step list you can act on.",
-    notIncluded: ["Building the product", "Guarantees of business or technical success"],
-    basedOn: "ATHATHI discovery work and academic software projects",
+    notIncluded: ["Expert consultancy or advanced AI mentorship", "Building the product", "Guarantees of business or technical success"],
+    basedOn: "An experience-led discussion drawing on ATHATHI's customer discovery and my software projects",
   },
   {
     id: "ai-exploration",
     title: "AI & Technology Product Exploration",
-    status: "inquiry",
+    status: "hidden",
     forWho: ["Students and teams considering AI", "Early-stage founders", "Non-technical business owners"],
     problem: "You are unsure whether AI fits your problem, or what an assistant, agent or RAG workflow would involve.",
     includes: [
@@ -67,7 +68,7 @@ export const services: Service[] = [
   {
     id: "customer-discovery",
     title: "Customer Discovery & Business Validation",
-    status: "pilot",
+    status: "hidden",
     forWho: ["Early-stage founders", "Student startup teams", "Graduation projects with a business angle"],
     problem: "You are about to build something without having talked to enough of the people it is for.",
     includes: [
@@ -83,7 +84,7 @@ export const services: Service[] = [
   {
     id: "brand-content",
     title: "Personal Brand & Content Direction",
-    status: "inquiry",
+    status: "hidden",
     forWho: ["Students and early-career professionals", "Founders building a public presence"],
     problem: "You want to share your work publicly but don't know what to say, or how to say it consistently.",
     includes: ["Personal positioning", "Content themes and ideation", "Copywriting feedback", "Content planning"],
@@ -94,7 +95,7 @@ export const services: Service[] = [
   {
     id: "project-collaboration",
     title: "Project & Product Collaboration",
-    status: "inquiry",
+    status: "hidden",
     forWho: ["Early-stage software projects", "AI application prototypes", "Technology-enabled business ideas"],
     problem: "You need someone who can work across the technical and business sides of an early project.",
     includes: ["Technical-business coordination", "Prototype contributions", "Cross-functional collaboration"],
@@ -104,16 +105,53 @@ export const services: Service[] = [
   },
 ];
 
-export const speakingTopics = [
-  { title: "Technology × Business", text: "Why technical people should understand customers, and business people should understand technology." },
-  { title: "Practical AI Applications", text: "What AI assistants, agents and RAG actually look like inside an early-stage product." },
-  { title: "From Problem to Product", text: "Starting with interviews before code: lessons from building ATHATHI." },
-  { title: "Customer Discovery for Technical Projects", text: "How CS students can validate graduation projects and startup ideas." },
-  { title: "Student Projects & Product Thinking", text: "Turning academic projects into something people would actually use." },
-  { title: "Building a Professional Identity", text: "Learning, opportunities and presenting yourself across technology and business." },
+export type SpeakingTopic = {
+  id: string;
+  title: string;
+  audience: string[];
+  content: string[];
+  formats: string[];
+  subtopic?: { title: string; audience: string; text: string };
+};
+
+/** Proposed topics MANO is open to presenting. None has been delivered yet — do not present them as past events. */
+export const speakingTopics: SpeakingTopic[] = [
+  {
+    id: "practical-ai",
+    title: "Practical AI for Business & Everyday Work",
+    audience: ["Business owners", "Small businesses", "Founders", "Non-technical teams"],
+    content: ["Practical AI use cases", "Research and planning", "Content and communication workflows", "Everyday productivity", "Evaluating AI-generated outputs"],
+    formats: ["Introductory talk", "Beginner-friendly workshop"],
+  },
+  {
+    id: "ai-copilot",
+    title: "AI as a Co-Pilot, Not a Competitor",
+    audience: ["Students", "Fresh graduates", "Early-career professionals", "Non-technical teams"],
+    content: ["AI for learning and research", "Productivity", "Writing and communication", "Creative support", "Verification and critical thinking"],
+    formats: ["Talk", "Beginner-friendly interactive session"],
+  },
+  {
+    id: "problem-to-product",
+    title: "From Problem to Product: Tech Entrepreneurship",
+    audience: ["Early founders", "Graduation project teams", "Students", "Aspiring entrepreneurs"],
+    content: ["Problem definition", "Customer discovery", "Validation", "MVP thinking", "Business model fundamentals", "User value and technical decisions"],
+    formats: ["Talk", "Interactive workshop"],
+    subtopic: {
+      title: "Customer Discovery for Technical Projects",
+      audience: "Computer Science, Engineering and graduation project teams",
+      text: "Identifying users, interviewing them, understanding real needs and validating assumptions before coding.",
+    },
+  },
+  {
+    id: "professional-presence",
+    title: "Building Your Professional Presence Through Projects & Content",
+    audience: ["Students", "Fresh graduates", "Early-career professionals"],
+    content: ["Professional identity", "Documenting projects", "Presenting work", "Creating useful professional content", "Choosing suitable platforms and content themes"],
+    formats: ["Talk", "Practical session"],
+  },
 ];
 
-export const speakingFormats = ["Talk", "Workshop", "Panel", "Online session", "Podcast / interview"];
+export const speakingFormats = ["Talk", "Workshop", "Interactive session", "Panel", "Online session", "Podcast / interview"];
 
 export type SessionType = {
   id: string;
@@ -136,17 +174,17 @@ export const sessionTypes: SessionType[] = [
   },
   {
     id: "project-session",
-    title: "1:1 Project / Idea Session",
+    title: "Project & Startup Clarity Session",
     duration: "About 45–60 minutes",
-    status: "pilot",
-    description: "A structured session focused on one specific project or idea.",
-    scope: ["Problem and user clarity", "Scope for a first version", "Concrete next steps"],
+    status: "published",
+    description: "An experience-led discussion for graduation teams, fresh graduates and early founders, focused on one project or idea.",
+    scope: ["Problem definition and intended users", "Scope, customer discovery and early validation", "Technical and business considerations", "Practical next steps"],
   },
   {
     id: "business-product",
     title: "Business / Product Discussion",
     duration: "About 45 minutes",
-    status: "pilot",
+    status: "hidden",
     description: "Customer discovery, product direction or a business opportunity.",
     scope: ["Customer and market questions", "Validation approach", "Business model thinking"],
   },
@@ -154,7 +192,7 @@ export const sessionTypes: SessionType[] = [
     id: "ai-exploration",
     title: "Technical / AI Exploration",
     duration: "About 45 minutes",
-    status: "inquiry",
+    status: "hidden",
     description: "Talk through an AI application idea, its scope and its feasibility.",
     scope: ["Whether AI fits", "Assistant / agent / RAG options", "Prototype scope"],
   },

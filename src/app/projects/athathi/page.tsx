@@ -64,7 +64,7 @@ const contributions = {
     "Business planning, financial and market analysis",
     "Partnership exploration with vendors and factories",
     "Brand identity, logo and social media positioning",
-    "Coordinating a core team of five and ~25 contributors as needed",
+    "Coordinating a six-person core team (including me) and ~25 contributors as needed",
   ],
 };
 
@@ -106,7 +106,7 @@ export default function Athathi() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <StatusBadge tone="amber">{STATUS}</StatusBadge>
             <span className="tag">My role: Founder & CEO</span>
-            <span className="tag">Core team of 5 + ~25 contributors</span>
+            <span className="tag">Six-person core team + ~25 contributors</span>
           </div>
         </div>
       </header>

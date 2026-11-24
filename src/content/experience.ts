@@ -47,7 +47,7 @@ export const experience: Experience[] = [
     summary:
       "A furniture and interior solutions platform connecting customers with vendors, with AI-supported discovery. I lead the business side and contribute directly to the product and AI work.",
     did: [
-      "Lead a core team of five (AI, frontend, backend, business development) and coordinate around 25 contributors engaged as needed across marketing, design, content, finance, legal, data and engineering.",
+      "Lead a six-person core team (including me) across AI, frontend, backend and business development, and coordinate around 25 contributors engaged as needed across marketing, design, content, finance, legal, data and engineering.",
       "Conducted 30+ customer interviews and 7+ interviews with furniture business owners across the journey from budget and design to production and delivery.",
       "Defined market segmentation (economy, mid-range, premium), STP, competitor analysis and value propositions for customer and vendor segments.",
       "Lead business planning, financial and market analysis, and partnership exploration with vendors and factories; direct brand identity, logo and social media positioning.",
@@ -100,7 +100,7 @@ export const experience: Experience[] = [
       "A structured ML internship combining theory and hands-on sessions, ending with an applied project on business-domain datasets.",
     did: [
       "Applying data preprocessing, linear and logistic regression with Python, NumPy, Pandas and Scikit-learn.",
-      "Building an applied machine learning project on real-world business-domain datasets (including sales and healthcare).",
+      "Building an applied machine learning project on real-world business-domain datasets.",
     ],
     exposure: ["Introduction to deep learning", "Model evaluation"],
     skills: ["Python", "NumPy", "Pandas", "Scikit-learn", "Regression"],

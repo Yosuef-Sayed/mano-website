@@ -66,7 +66,7 @@ export const dimensions: Dimension[] = [
       "Turning plans into progress: coordinating cross-functional teams and contributing directly to product work.",
     areas: ["Product development", "Leadership", "Team coordination", "Collaboration", "Project delivery"],
     evidence: [
-      { label: "ATHATHI core team", detail: "Five core members + ~25 contributors as needed", href: "/experience#athathi" },
+      { label: "ATHATHI core team", detail: "Six-person core team (including me) + ~25 contributors as needed", href: "/experience#athathi" },
       { label: "AI assistant development", detail: "System prompts, FastAPI integration, prototype", href: "/projects/athathi#contributions" },
       { label: "Star Union Presidency", detail: "Five divisions, season planning, recruitment", href: "/experience#star-union" },
       { label: "MASROOFY", detail: "Requirements, design, schema, controllers (team of 4)", href: "/projects#masroofy" },
@@ -94,7 +94,7 @@ export const proofPoints = [
   { value: "7+", label: "furniture business interviews", context: "ATHATHI vendor research" },
   { value: "150+", label: "customers per week, on average", context: "REDS · Dec 2024 – Jun 2025" },
   { value: "200+", label: "members organization-wide", context: "Star Union · President since Sep 2026" },
-  { value: "~25", label: "contributors engaged as needed", context: "ATHATHI, alongside a core team of five" },
+  { value: "~25", label: "contributors engaged as needed", context: "ATHATHI, alongside a six-person core team" },
   { value: "6 + 6", label: "Reels and LinkedIn visual posts", context: "MANO personal brand content" },
 ];
 

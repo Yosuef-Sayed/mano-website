@@ -20,18 +20,23 @@ export default function Home() {
               <span aria-hidden className="h-px w-8 bg-teal/60" />
               Business × Technology
             </p>
-            <h1 id="hero-title" className="h-display mt-6 text-[2.6rem] leading-[1.02] sm:text-6xl lg:text-7xl" data-reveal>
-              I connect technology with the <span className="brush-underline">problems</span> that matter.
+            <h1 id="hero-title" className="mt-6" data-reveal>
+              <span className="h-display block text-[2.6rem] leading-[1.02] sm:text-6xl lg:text-7xl">
+                Abdelrahman <span className="brush-underline">MANO</span>
+              </span>
+              <span className="mt-5 block font-display text-2xl font-bold text-teal sm:text-3xl">{site.role}</span>
             </h1>
+            <p className="mt-3 text-xs font-semibold tracking-[0.28em] text-paper/70 uppercase" data-reveal>
+              {site.supporting}
+            </p>
             <p className="lead mt-6 max-w-xl" data-reveal>
-              I&apos;m {site.shortName} — a Computer Science student at Cairo University working across AI, software, business and
-              customers. I founded ATHATHI, lead Star Union, and care about one thing: turning real problems into something people can use.
+              I work across AI applications and software projects, connecting technical execution with real customer and business needs.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3" data-reveal>
-              <Link href="/projects" className="btn btn-primary">
-                Explore My Work <ArrowRight />
+              <Link href="/contact?topic=career" className="btn btn-primary">
+                Discuss an Opportunity <ArrowRight />
               </Link>
-              <Link href="/collaborate" className="btn btn-secondary">Work With Me</Link>
+              <Link href="/projects" className="btn btn-secondary">Explore My Work</Link>
               <a href={site.cv.path} download className="btn btn-ghost">
                 <Download /> Download CV
               </a>
@@ -45,7 +50,7 @@ export default function Home() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-line">
               <Image
                 src="/images/mano-portrait.jpg"
-                alt="Portrait of Abdelrahman Ayman (MANO) in a dark blazer, lit warm from the left and cool from the right"
+                alt="Portrait of Abdelrahman MANO in a dark blazer, lit warm from the left and cool from the right"
                 fill
                 priority
                 sizes="(min-width: 1024px) 40vw, (min-width: 640px) 400px, 320px"

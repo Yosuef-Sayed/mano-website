@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { activeSocials, site } from "@/config/site";
+import { site } from "@/config/site";
 import { Logo } from "./Logo";
+import { SocialLinks } from "./SocialLinks";
 
 const groups = [
   { title: "Work", links: [["Experience", "/experience"], ["Projects", "/projects"], ["ATHATHI case study", "/projects/athathi"], ["About", "/about"]] },
@@ -14,7 +15,7 @@ export function Footer() {
         <div>
           <Logo />
           <p className="mt-5 max-w-xs text-sm text-muted">
-            {site.name}. Computer Science student connecting technology, business and people. {site.location}.
+            {site.publicName} — {site.role}, with a {site.supporting.toLowerCase()} perspective. {site.location}.
           </p>
         </div>
         {groups.map((g) => (
@@ -32,12 +33,9 @@ export function Footer() {
           <ul className="mt-4 space-y-2 text-sm">
             <li><Link className="text-paper/80 transition hover:text-teal" href="/contact">Contact</Link></li>
             <li><a className="text-paper/80 transition hover:text-teal" href={site.cv.path} download>Download CV</a></li>
-            {activeSocials().map((s) => (
-              <li key={s.key}>
-                <a className="text-paper/80 transition hover:text-teal" href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
-              </li>
-            ))}
+            <li><a className="text-paper/80 transition hover:text-teal" href={`mailto:${site.email}`} title={site.email}>Email</a></li>
           </ul>
+          <SocialLinks className="mt-5" />
         </div>
       </div>
       <div className="border-t border-line">

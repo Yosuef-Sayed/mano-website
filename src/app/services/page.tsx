@@ -7,7 +7,7 @@ import { Check, Minus } from "@/components/Icons";
 
 export const metadata: Metadata = {
   title: "Services",
-  description: "Ways to work together: idea clarity sessions, AI product exploration, customer discovery, personal brand direction and project collaboration.",
+  description: "The Project & Startup Clarity Session: an experience-led discussion on problem definition, users, scope and early validation.",
   alternates: { canonical: "/services" },
 };
 
@@ -19,7 +19,7 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
       <PageHero
         eyebrow="Ways we can work together"
         title={<>From ideas to <span className="text-teal">practical direction.</span></>}
-        lead="Structured sessions and collaboration grounded in what I've actually done — customer discovery, AI prototyping, content and team coordination. Each card says who it's for, what's included, and what isn't."
+        lead="An experience-led discussion, not expert consultancy: I share what I've learned from ATHATHI's customer discovery and my software projects to help you define the problem, the users and a realistic next step."
       >
         <p className="text-sm text-muted">No prices or packages are published yet. Every request is reviewed first, and scope is agreed before anything is confirmed.</p>
       </PageHero>

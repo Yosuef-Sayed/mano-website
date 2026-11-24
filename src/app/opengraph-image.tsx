@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "fs/promises";
 import path from "path";
 
-export const alt = "MANO — Business × Technology. Abdelrahman Ayman.";
+export const alt = "Abdelrahman MANO — AI Applications & Software Development.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,8 +16,8 @@ export default async function OG() {
           <div style={{ fontSize: 96, fontWeight: 900, letterSpacing: -2 }}>MANO</div>
           <div style={{ width: 220, height: 10, background: "#14B8A6", borderRadius: 10, transform: "rotate(-3deg)", marginTop: -6 }} />
           <div style={{ fontSize: 26, letterSpacing: 8, color: "#14B8A6", marginTop: 28 }}>BUSINESS × TECHNOLOGY</div>
-          <div style={{ fontSize: 40, fontWeight: 700, marginTop: 40, lineHeight: 1.2 }}>Connecting technology with the problems that matter.</div>
-          <div style={{ fontSize: 24, color: "#9FB0B6", marginTop: 24 }}>Abdelrahman Ayman · CS @ Cairo University</div>
+          <div style={{ fontSize: 40, fontWeight: 700, marginTop: 40, lineHeight: 1.2 }}>AI Applications & Software Development</div>
+          <div style={{ fontSize: 24, color: "#9FB0B6", marginTop: 24 }}>Abdelrahman MANO · Product & Business Thinking</div>
         </div>
         <img src={src} width={470} height={630} style={{ objectFit: "cover" }} alt="" />
       </div>

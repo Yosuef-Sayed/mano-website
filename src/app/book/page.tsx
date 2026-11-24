@@ -4,7 +4,7 @@ import { PageHero } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Book a Session",
-  description: "Request an online session with MANO: an introductory call, a project or idea session, a business discussion or an AI exploration.",
+  description: "Request an online session with Abdelrahman MANO: an introductory call or a Project & Startup Clarity Session.",
   alternates: { canonical: "/book" },
 };
 

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { activeSocials, site } from "@/config/site";
+import { site } from "@/config/site";
+import { SocialLinks } from "@/components/SocialLinks";
 import { ContactForm } from "@/components/forms/Forms";
 import { PageHero } from "@/components/ui";
-import { ArrowUpRight, Download, Mail } from "@/components/Icons";
+import { Download, Mail } from "@/components/Icons";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contact MANO (Abdelrahman Ayman) about opportunities, projects, speaking or anything else.",
+  description: "Contact Abdelrahman MANO about hiring and technical opportunities, project collaboration, speaking or anything else.",
   alternates: { canonical: "/contact" },
 };
 
@@ -31,16 +32,15 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
               <li>
                 <a href={`mailto:${site.email}`} className="link inline-flex items-center gap-2 break-all"><Mail /> {site.email}</a>
               </li>
-              {activeSocials().map((s) => (
-                <li key={s.key}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-2">{s.label} <ArrowUpRight /></a>
-                </li>
-              ))}
               <li>
                 <a href={site.cv.path} download className="link inline-flex items-center gap-2"><Download /> Download CV (PDF)</a>
               </li>
             </ul>
             <p className="mt-4 text-sm text-muted">Based in {site.location} · Cairo time (UTC+2/+3).</p>
+          </div>
+          <div>
+            <p className="eyebrow">Social</p>
+            <SocialLinks variant="list" className="mt-4" />
           </div>
           <div>
             <p className="eyebrow">Specific routes</p>

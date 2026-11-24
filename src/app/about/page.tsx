@@ -9,7 +9,7 @@ import { ArrowUpRight, Download } from "@/components/Icons";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Who MANO is: a Computer Science student whose experience moves across technology, business and people.",
+  description: "About Abdelrahman MANO: AI applications and software development, shaped by customer, product and business experience.",
   alternates: { canonical: "/about" },
 };
 
@@ -51,7 +51,7 @@ export default function About() {
 
       <section className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr]" aria-labelledby="who">
         <div className="relative mx-auto aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-line lg:sticky lg:top-28 lg:self-start" data-reveal>
-          <Image src="/images/mano-portrait.jpg" alt="Abdelrahman Ayman (MANO)" fill sizes="(min-width:1024px) 380px, 90vw" className="object-cover" />
+          <Image src="/images/mano-portrait.jpg" alt="Abdelrahman MANO" fill sizes="(min-width:1024px) 380px, 90vw" className="object-cover" />
         </div>
         <div className="space-y-6 text-lg leading-relaxed text-paper/85" data-reveal>
           <h2 id="who" className="h-display text-3xl text-paper">Who I am</h2>

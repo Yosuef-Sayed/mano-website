@@ -112,7 +112,7 @@ export function LoopAndWork() {
                   <span className={`mt-3 text-paper/75 ${f.big ? "max-w-xl text-lg" : "text-sm"}`}>{f.why}</span>
                   {f.big && (
                     <span className="mt-8 grid gap-3 sm:grid-cols-3">
-                      {[["30+ / 7+", "customer / business interviews"], ["3", "AI components I worked on"], ["5 + ~25", "core team + contributors"]].map(([v, l]) => (
+                      {[["30+ / 7+", "customer / business interviews"], ["3", "AI components I worked on"], ["6 + ~25", "core team (incl. me) + contributors"]].map(([v, l]) => (
                         <span key={l} className="rounded-xl border border-line bg-ink/40 px-4 py-3">
                           <span className="block font-display text-2xl font-extrabold text-teal">{v}</span>
                           <span className="block text-xs text-muted">{l}</span>

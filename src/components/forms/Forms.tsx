@@ -110,7 +110,7 @@ export function CollaborateForm({ initialType = "" }: { initialType?: string }) 
 }
 
 /* ───────────── Speaking invitation ───────────── */
-export function SpeakingForm({ initialTopic = "" }: { initialTopic?: string }) {
+export function SpeakingForm({ initialTopic = "", initialFormat = "" }: { initialTopic?: string; initialFormat?: string }) {
   const [mode, setMode] = useState("Online");
   return (
     <FormShell
@@ -122,7 +122,7 @@ export function SpeakingForm({ initialTopic = "" }: { initialTopic?: string }) {
         <TextField name="organization" label="Event or organization" required autoComplete="organization" />
         <TextField name="name" label="Contact person" required autoComplete="name" />
         <TextField name="email" label="Email" type="email" required autoComplete="email" />
-        <Select name="eventType" label="Event type" required placeholder="Choose a type" options={speakingFormats.map((f) => ({ value: f, label: f }))} />
+        <Select name="eventType" label="Event type" required placeholder="Choose a type" defaultValue={speakingFormats.includes(initialFormat) ? initialFormat : ""} options={speakingFormats.map((f) => ({ value: f, label: f }))} />
         <TextField name="topic" label="Topic of interest" required defaultValue={initialTopic} className="sm:col-span-2" />
         <TextField name="date" label="Expected date" type="date" />
         <Select name="mode" label="Format" required value={mode} onChange={setMode} options={["Online", "Offline", "Not decided"].map((m) => ({ value: m, label: m === "Offline" ? "Offline (in person)" : m }))} />

@@ -14,8 +14,8 @@ const arabic = Lalezar({ subsets: ["arabic"], variable: "--font-arabic", display
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.brand} — ${site.tagline} | ${site.shortName}`,
-    template: `%s | ${site.brand} — ${site.shortName}`,
+    default: `${site.publicName} | ${site.role}`,
+    template: `%s | ${site.publicName}`,
   },
   description: site.description,
   applicationName: site.brand,
@@ -25,12 +25,12 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: `${site.brand} — ${site.tagline}`,
-    title: `${site.brand} — ${site.tagline}`,
+    title: `${site.publicName} | ${site.role}`,
     description: site.description,
     url: "/",
     locale: "en_US",
   },
-  twitter: { card: "summary_large_image", title: `${site.brand} — ${site.tagline}`, description: site.description },
+  twitter: { card: "summary_large_image", title: `${site.publicName} | ${site.role}`, description: site.description },
   robots: { index: true, follow: true },
 };
 
@@ -46,10 +46,12 @@ const jsonLd = {
       "@type": "Person",
       "@id": `${site.url}/#person`,
       name: site.name,
-      alternateName: [site.brand, site.socialHandleName],
+      alternateName: [site.publicName, site.brand],
+      email: `mailto:${site.email}`,
       url: site.url,
       image: `${site.url}/images/mano-portrait.jpg`,
-      jobTitle: "Computer Science Student",
+      jobTitle: "Founder & CEO",
+      worksFor: { "@type": "Organization", name: "ATHATHI" },
       description: site.description,
       address: { "@type": "PostalAddress", addressLocality: "Cairo", addressCountry: "EG" },
       alumniOf: { "@type": "CollegeOrUniversity", name: "Cairo University, Faculty of Computers and Artificial Intelligence" },

@@ -3,7 +3,7 @@ import type { DimensionId } from "./valueLoop";
 export type ProjectCategory = "ai-ml" | "software" | "product" | "academic";
 
 export const projectCategories: { id: ProjectCategory; label: string }[] = [
-  { id: "ai-ml", label: "AI & Machine Learning" },
+  { id: "ai-ml", label: "AI Applications" },
   { id: "software", label: "Software Development" },
   { id: "product", label: "Entrepreneurship & Product" },
   { id: "academic", label: "Academic Projects" },
@@ -21,7 +21,7 @@ export type Project = {
   team?: string;
   tech: string[];
   status: string;
-  context: "Startup" | "Academic" | "Academic coursework";
+  context: "Startup" | "Academic";
   dimensions: DimensionId[];
   /** Only add a link once the repository or demo is verified and presentable. */
   repo?: string;
@@ -44,7 +44,7 @@ export const projects: Project[] = [
       "Tavily Search for current web data such as wood prices and trends",
     ],
     role: ["Founder & CEO", "Customer & Business Assistants", "RAG workflow", "FastAPI integration", "Schema & Figma UI/UX"],
-    team: "Core team of five + ~25 contributors",
+    team: "Six-person core team + ~25 contributors",
     tech: ["LangChain", "LangGraph", "FastAPI", "RAG", "Vector DB", "Tavily", "React", "Django", "Flutter", "SQL", "Docker"],
     status: "Functional prototype — further integration & refinement required",
     context: "Startup",
@@ -128,22 +128,5 @@ export const projects: Project[] = [
     context: "Academic",
     dimensions: ["technology"],
   },
-  {
-    id: "ml-coursework",
-    name: "Breast Cancer Classification",
-    subtitle: "Machine learning coursework",
-    categories: ["ai-ml", "academic"],
-    purpose: "Compare classic classifiers and data-split strategies on a medical dataset.",
-    features: [
-      "Dataset inspection and preprocessing",
-      "Comparison of train/test split strategies",
-      "Logistic Regression, Decision Tree and SVM models",
-      "Evaluation with accuracy and other metrics",
-    ],
-    role: ["Individual coursework"],
-    tech: ["Python", "Scikit-learn"],
-    status: "Academic assignment — not a deployed model",
-    context: "Academic coursework",
-    dimensions: ["technology"],
-  },
+
 ];

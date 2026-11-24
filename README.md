@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MANO — Business × Technology
 
-## Getting Started
+Personal brand and portfolio website for **Abdelrahman Ayman Samir Elsayed (MANO)**.
+Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4 and Zod.
 
-First, run the development server:
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Forms work locally with no setup: submissions are saved to `.data/submissions.json` (development only).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build && npm start   # production build
+npm run lint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## What's where
 
-## Learn More
+| Path | Purpose |
+|---|---|
+| `src/config/site.ts` | Name, email, social links, CV path, domain, navigation |
+| `src/content/*.ts` | All page content: experience, projects, services, Value Loop, MANO content |
+| `src/app/*` | Pages (`/`, `/about`, `/experience`, `/projects`, `/projects/athathi`, `/services`, `/speaking`, `/collaborate`, `/book`, `/contact`, `/privacy`) |
+| `src/app/api/forms/[type]` | Form endpoint: validation, spam checks, storage, email |
+| `src/app/admin` | Private inbox (HTTP Basic auth, off unless `ADMIN_PASSWORD` is set) |
+| `src/lib` | Storage (Supabase / local file), email (Resend), rate limiting, schemas |
+| `public/files/…CV.pdf` | The CV served at `/cv` |
 
-To learn more about Next.js, take a look at the following resources:
+## Docs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [docs/CONTENT-GUIDE.md](docs/CONTENT-GUIDE.md) — how to update the CV, experience, projects, services, links and booking settings
+- [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — environment variables, Supabase/Resend setup, deploying, custom domain, verification checklist
+- [docs/DESIGN-SYSTEM.md](docs/DESIGN-SYSTEM.md) — tokens, typography, components, interaction rules
+- [docs/ROADMAP.md](docs/ROADMAP.md) — calendar sync, payments, admin and other future features
+- [docs/supabase.sql](docs/supabase.sql) — database table for submissions

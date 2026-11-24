@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
+/* ───────────────── MANO design tokens ─────────────────
+   Palette from the MANO Brand Identity sheet. Dark editorial by design. */
+@theme {
+  --color-navy: #081f2a;
+  --color-ink: #050b0a;
+  --color-paper: #ededed;
+  --color-teal: #14b8a6;
+  --color-teal-soft: #5eead4;
+  --color-amber: #ffb15a;
+  --color-surface: #0b2531;
+  --color-surface-2: #10303e;
+  --color-muted: #9fb0b6;
+  --color-line: rgb(237 237 237 / 0.1);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-brush: var(--font-brush), "Brush Script MT", cursive;
+  --font-arabic: var(--font-arabic), "Geeza Pro", sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(20 184 166 / 0.35);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Subtle film grain, per the brand's visual language. Purely decorative. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold tracking-[0.22em] text-teal uppercase;
+  }
+  .h-display {
+    @apply font-display font-extrabold tracking-tight text-balance;
+  }
+  .lead {
+    @apply text-lg leading-relaxed text-muted text-pretty;
+  }
+
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition duration-200 ease-out select-none;
+  }
+  .btn-primary {
+    @apply bg-teal text-ink hover:bg-teal-soft;
+  }
+  .btn-secondary {
+    @apply border border-paper/25 text-paper hover:border-teal hover:text-teal;
+  }
+  .btn-ghost {
+    @apply px-3 text-paper/80 hover:text-teal;
+  }
+  .btn[aria-disabled="true"],
+  .btn:disabled {
+    @apply pointer-events-none opacity-50;
+  }
+
+  .link {
+    @apply text-paper underline decoration-teal/60 decoration-2 underline-offset-4 transition hover:text-teal hover:decoration-teal;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line bg-surface/60 px-3 py-1 text-xs font-medium text-paper/85 transition;
+  }
+  .chip[aria-pressed="true"],
+  .chip[aria-current="true"] {
+    @apply border-teal bg-teal/15 text-teal;
+  }
+  button.chip,
+  a.chip {
+    @apply min-h-9 cursor-pointer px-4 text-sm hover:border-teal/60;
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-md bg-paper/5 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-paper/70 uppercase;
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-surface/50;
+  }
+
+  .input {
+    @apply block w-full rounded-xl border border-paper/15 bg-ink/60 px-4 py-3 text-base text-paper placeholder:text-paper/35 transition outline-none focus:border-teal focus:ring-2 focus:ring-teal/30;
+  }
+  .input[aria-invalid="true"] {
+    @apply border-red-400/80 focus:ring-red-400/30;
+  }
+
+  .brush-underline {
+    @apply relative inline-block;
+  }
+  .brush-underline::after {
+    content: "";
+    position: absolute;
+    left: -2%;
+    right: -4%;
+    bottom: -0.12em;
+    height: 0.22em;
+    border-radius: 999px;
+    background: var(--color-teal);
+    transform: rotate(-2deg) skewX(-18deg);
+    opacity: 0.9;
+  }
+}
+
+/* Reveal-on-scroll: content is visible by default; JS adds .reveal-ready to animate. */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease-out-soft), transform 0.7s var(--ease-out-soft);
+}
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }

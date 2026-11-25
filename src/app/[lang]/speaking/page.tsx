@@ -33,8 +33,7 @@ export default async function SpeakingPage({ params, searchParams }: PageProps<"
             <li key={t.id} id={t.id} className="scroll-mt-28" data-reveal>
               <article className="card relative flex h-full flex-col overflow-hidden p-6 sm:p-7">
                 <span aria-hidden className="latin pointer-events-none absolute -end-2 -top-6 font-display text-[7rem] font-black text-paper/[0.04]">0{i + 1}</span>
-                <span className="tag self-start">{s.proposed}</span>
-                <h3 className="mt-3 text-xl font-bold">{t.title}</h3>
+                <h3 className="text-xl font-bold">{t.title}</h3>
                 <p className="mt-3 text-sm"><span className="text-muted">{s.forLabel}: </span>{t.audience.join(" · ")}</p>
                 <ul className="mt-4 flex flex-wrap gap-1.5" aria-label={s.coversLabel}>
                   {t.content.map((x) => <li key={x} className="chip">{x}</li>)}

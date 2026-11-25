@@ -58,16 +58,6 @@ export function LoopAndWork({ lang, home, dimensions }: { lang: Lang; home: Cont
                   <span dir="auto" className="text-xs font-semibold tracking-wide text-muted uppercase">{it.kicker}</span>
                   <span className={`h-display mt-3 ${big ? "latin text-4xl lg:text-6xl" : "text-2xl"}`}>{it.title}</span>
                   <span className={`mt-3 text-paper/75 ${big ? "max-w-xl text-lg" : "text-sm"}`}>{it.why}</span>
-                  {big && (
-                    <span className="mt-8 grid gap-3 sm:grid-cols-3">
-                      {f.stats.map((s) => (
-                        <span key={s.label} className="rounded-xl border border-line bg-ink/40 px-4 py-3">
-                          <span dir="ltr" className="block font-display text-2xl font-extrabold text-teal">{s.value}</span>
-                          <span className="block text-xs text-muted">{s.label}</span>
-                        </span>
-                      ))}
-                    </span>
-                  )}
                   <span className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6">
                     <span className="flex flex-wrap gap-1.5">
                       {it.dims.map((d) => (

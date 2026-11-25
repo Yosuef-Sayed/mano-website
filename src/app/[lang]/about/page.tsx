@@ -63,20 +63,6 @@ export default async function About({ params }: PageProps<"/[lang]/about">) {
         </ol>
       </section>
 
-      <section className="container-x mt-24" aria-labelledby="approach-title">
-        <SectionHead id="approach-title" eyebrow={a.approachEyebrow} title={a.approachTitle} lead={a.approachLead} />
-        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {a.approach.map((s, i) => (
-            <li key={s.step} className="card relative p-6" data-reveal>
-              <span className="latin font-display text-sm font-bold text-amber">0{i + 1}</span>
-              <h3 className="mt-2 text-xl font-bold">{s.step}</h3>
-              <p className="mt-1 text-paper/80">{s.text}</p>
-              <p className="mt-4 border-t border-line pt-4 text-sm text-muted">{s.example}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
       <section className="container-x mt-24" aria-labelledby="focus-title">
         <SectionHead id="focus-title" eyebrow={a.focusEyebrow} title={a.focusTitle} />
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

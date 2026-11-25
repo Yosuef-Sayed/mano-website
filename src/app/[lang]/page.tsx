@@ -43,10 +43,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
                   <>Abdelrahman <span className="brush-underline">MANO</span></>
                 )}
               </span>
-              <span className="mt-5 block font-display text-2xl font-bold text-teal sm:text-3xl">{c.identity.role}</span>
+              <span className="mt-6 block text-2xl font-semibold leading-snug text-paper/90 sm:text-3xl">{c.identity.tagline}</span>
             </h1>
-            <p className="mt-3 text-xs font-semibold tracking-[0.28em] text-paper/70 uppercase sm:text-sm" data-reveal>{c.identity.supporting}</p>
-            <p className="lead mt-6 max-w-xl" data-reveal>{h.lead}</p>
+            <p className="mt-6 font-display text-lg font-bold text-teal sm:text-xl" data-reveal>{c.identity.role}</p>
+            <p className="mt-1 text-xs font-semibold tracking-[0.28em] text-paper/60 uppercase sm:text-sm" data-reveal>{c.identity.supporting}</p>
             <div className="mt-8 flex flex-wrap items-center gap-3" data-reveal>
               <Link href={lh(lang, "/contact?intent=hiring")} className="btn btn-primary">{c.ui.discuss} <ArrowRight /></Link>
               <Link href={lh(lang, "/projects")} className="btn btn-secondary">{c.ui.explore}</Link>
@@ -69,23 +69,6 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* WHAT I WORK ON */}
-      <section className="container-x mt-16 sm:mt-24" aria-labelledby="pillars-title">
-        <SectionHead id="pillars-title" eyebrow={h.pillars.eyebrow} title={h.pillars.title} />
-        <ul className="mt-10 grid gap-5 md:grid-cols-3">
-          {h.pillars.items.map((p, i) => (
-            <li key={p.title} data-reveal>
-              <Link href={lh(lang, p.href)} className={`card group flex h-full flex-col p-6 transition hover:-translate-y-0.5 hover:border-teal/60 ${i < 2 ? "" : "bg-surface/30"}`}>
-                <span className="latin font-display text-sm font-bold text-amber">0{i + 1}</span>
-                <span className="mt-2 text-xl font-bold">{p.title}</span>
-                <span className="mt-2 text-sm text-paper/75">{p.text}</span>
-                <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-teal">{p.cta} <ArrowRight /></span>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <LoopAndWork lang={lang} home={h} dimensions={c.dimensions} />

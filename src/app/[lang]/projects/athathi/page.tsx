@@ -189,7 +189,6 @@ export default async function Athathi({ params }: PageProps<"/[lang]/projects/at
                 <li key={x.title} className="rounded-xl border border-dashed border-amber/40 bg-amber/5 px-5 py-4"><b className="text-amber">{x.title}.</b> <span className="text-paper/85">{x.text}</span></li>
               ))}
             </ul>
-            <p className="text-base text-muted">{a.prototype.note}</p>
             <p>{a.prototype.current}</p>
           </Chapter>
 

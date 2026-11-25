@@ -127,15 +127,20 @@ export default async function Athathi({ params }: PageProps<"/[lang]/projects/at
           </Chapter>
 
           <Chapter id={ch[4].id} n={5} title={ch[4].title} word={a.chapterWord} {...nx(4)}>
-            <div className="grid gap-5 md:grid-cols-2">
-              {a.technical.contributions.map((g) => (
-                <div key={g.title} className="card p-6">
-                  <p className="eyebrow">{g.title}</p>
-                  <ul className="mt-4 space-y-2.5 text-base">
-                    {g.items.map((x) => <li key={x} className="flex gap-3"><span aria-hidden className="mt-3 h-px w-3 shrink-0 bg-teal" /><span className="text-paper/85">{x}</span></li>)}
-                  </ul>
-                </div>
-              ))}
+            <div className="card p-6">
+              <p className="eyebrow">{a.technical.contributions[1].title}</p>
+              <ul className="mt-4 grid gap-2.5 text-base sm:grid-cols-2">
+                {a.technical.contributions[1].items.map((x) => <li key={x} className="flex gap-3"><span aria-hidden className="mt-3 h-px w-3 shrink-0 bg-teal" /><span className="text-paper/85">{x}</span></li>)}
+              </ul>
+            </div>
+          </Chapter>
+
+          <Chapter id={ch[5].id} n={6} title={ch[5].title} word={a.chapterWord} {...nx(5)}>
+            <div className="card p-6">
+              <p className="eyebrow">{a.technical.contributions[0].title}</p>
+              <ul className="mt-4 grid gap-2.5 text-base sm:grid-cols-2">
+                {a.technical.contributions[0].items.map((x) => <li key={x} className="flex gap-3"><span aria-hidden className="mt-3 h-px w-3 shrink-0 bg-teal" /><span className="text-paper/85">{x}</span></li>)}
+              </ul>
             </div>
             <p className="rounded-xl border border-line bg-ink/50 p-4 text-base text-paper/80">{a.technical.boundary}</p>
 
@@ -181,7 +186,7 @@ export default async function Athathi({ params }: PageProps<"/[lang]/projects/at
             </dl>
           </Chapter>
 
-          <Chapter id={ch[5].id} n={6} title={ch[5].title} word={a.chapterWord} {...nx(5)}>
+          <Chapter id={ch[6].id} n={7} title={ch[6].title} word={a.chapterWord} {...nx(6)}>
             <StatusBadge tone="amber">{a.status}</StatusBadge>
             <p>{a.prototype.lead}</p>
             <ul className="space-y-3 text-base">
@@ -192,7 +197,7 @@ export default async function Athathi({ params }: PageProps<"/[lang]/projects/at
             <p>{a.prototype.current}</p>
           </Chapter>
 
-          <Chapter id={ch[6].id} n={7} title={ch[6].title} word={a.chapterWord}>
+          <Chapter id={ch[7].id} n={8} title={ch[7].title} word={a.chapterWord}>
             <ul className="grid gap-3 text-base sm:grid-cols-2">
               {a.lessons.items.map((x) => <li key={x.title} className="card p-5"><p className="font-bold">{x.title}</p><p className="mt-1 text-sm text-muted">{x.text}</p></li>)}
             </ul>

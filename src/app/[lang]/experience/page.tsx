@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { readdirSync } from "fs";
+import path from "path";
 import { site } from "@/config/site";
 import { getContent } from "@/content";
 import { resolveLang } from "@/i18n/server";
 import { pageMeta } from "@/lib/seo";
 import { Timeline } from "@/components/Timeline";
-import { ExperienceExplorer } from "@/components/ExperienceExplorer";
 import { CtaBand, PageHero, SectionHead } from "@/components/ui";
 import { Download, FileIcon } from "@/components/Icons";
 
@@ -12,6 +13,20 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/experience
   const lang = await resolveLang(params);
   const x = getContent(lang).experience;
   return pageMeta(lang, "/experience", x.metaTitle, x.metaDescription);
+}
+
+/** Official logos dropped into /public/images/logos/<key>.(svg|png|jpg|webp) replace the monogram marks automatically. */
+function availableLogos(): Record<string, string> {
+  try {
+    const dir = path.join(process.cwd(), "public/images/logos");
+    return Object.fromEntries(
+      readdirSync(dir)
+        .filter((f) => /\.(svg|png|jpe?g|webp)$/i.test(f))
+        .map((f) => [f.replace(/\.[^.]+$/, ""), `/images/logos/${f}`]),
+    );
+  } catch {
+    return {};
+  }
 }
 
 export default async function ExperiencePage({ params }: PageProps<"/[lang]/experience">) {
@@ -26,14 +41,7 @@ export default async function ExperiencePage({ params }: PageProps<"/[lang]/expe
 
       <section className="container-x" aria-labelledby="timeline-title">
         <h2 id="timeline-title" className="sr-only">{x.timeline.title}</h2>
-        <Timeline lang={lang} t={x.timeline} />
-      </section>
-
-      <section className="container-x mt-16" aria-labelledby="roles-title">
-        <SectionHead id="roles-title" eyebrow={x.rolesEyebrow} title={x.rolesTitle} lead={x.rolesLead} />
-        <div className="mt-8">
-          <ExperienceExplorer lang={lang} x={x} />
-        </div>
+        <Timeline lang={lang} x={x} logos={availableLogos()} />
       </section>
 
       <section className="container-x mt-24" aria-labelledby="edu-title">

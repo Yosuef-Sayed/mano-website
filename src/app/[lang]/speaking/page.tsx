@@ -46,8 +46,8 @@ export default async function SpeakingPage({ params, searchParams }: PageProps<"
                 )}
                 <p className="mt-5 text-sm"><span className="text-muted">{s.formatsLabel}: </span>{t.formats.join(" · ")}</p>
                 <div className="mt-auto flex flex-wrap gap-3 pt-6">
-                  <Link href={lh(lang, `/speaking?topic=${encodeURIComponent(t.title)}&format=talk#invite`)} scroll={false} className="btn btn-primary">{s.speak}</Link>
-                  <Link href={lh(lang, `/speaking?topic=${encodeURIComponent(t.title)}&format=workshop#invite`)} scroll={false} className="btn btn-secondary">{s.workshop}</Link>
+                  <Link href={lh(lang, `/speaking?topic=${encodeURIComponent(t.title)}&format=talk#invite`)} className="btn btn-primary">{s.speak}</Link>
+                  <Link href={lh(lang, `/speaking?topic=${encodeURIComponent(t.title)}&format=workshop#invite`)} className="btn btn-secondary">{s.workshop}</Link>
                 </div>
               </article>
             </li>

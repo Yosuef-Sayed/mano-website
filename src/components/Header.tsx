@@ -23,9 +23,12 @@ export function Header({ lang, ui }: { lang: Lang; ui: Content["ui"] }) {
     { label: ui.nav.projects, href: "/projects" },
     { label: ui.nav.speaking, href: "/speaking" },
     { label: ui.nav.tools, href: "/tools" },
-    { label: ui.nav.contact, href: "/contact" },
+    { label: ui.nav.contact, href: "/contact#form" },
   ];
-  const active = (href: string) => path === href || path.startsWith(href + "/");
+  const active = (href: string) => {
+    const h = href.split("#")[0];
+    return path === h || path.startsWith(h + "/");
+  };
   const other: Lang = lang === "ar" ? "en" : "ar";
 
   useEffect(() => {
@@ -82,7 +85,7 @@ export function Header({ lang, ui }: { lang: Lang; ui: Content["ui"] }) {
         <div className="hidden items-center gap-1 xl:flex">
           {langLink}
           <a href={site.cv.path} className="btn btn-ghost whitespace-nowrap px-2.5" download>{ui.cv}</a>
-          <Link href={lh(lang, "/contact?intent=hiring")} className="btn btn-primary whitespace-nowrap px-4">{ui.discuss}</Link>
+          <Link href={lh(lang, "/contact?intent=hiring#form")} className="btn btn-primary whitespace-nowrap px-4">{ui.discuss}</Link>
         </div>
 
         <div className="flex items-center gap-1 xl:hidden">
@@ -116,7 +119,7 @@ export function Header({ lang, ui }: { lang: Lang; ui: Content["ui"] }) {
             ))}
           </ul>
           <div className="mt-8 grid gap-3">
-            <Link href={lh(lang, "/contact?intent=hiring")} className="btn btn-primary w-full">{ui.discuss}</Link>
+            <Link href={lh(lang, "/contact?intent=hiring#form")} className="btn btn-primary w-full">{ui.discuss}</Link>
             <a href={site.cv.path} download className="btn btn-secondary w-full">{ui.downloadCv}</a>
           </div>
         </nav>

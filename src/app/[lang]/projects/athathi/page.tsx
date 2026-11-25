@@ -218,8 +218,8 @@ export default async function Athathi({ params }: PageProps<"/[lang]/projects/at
         title={a.ctaTitle}
         text={a.ctaText}
         actions={[
-          { label: c.cta.discuss, href: "/contact?intent=collaboration" },
-          { label: c.cta.session, href: "/book" },
+          { label: c.cta.discuss, href: "/contact?intent=collaboration#form" },
+          { label: c.cta.session, href: "/book#form" },
         ]}
       />
     </>

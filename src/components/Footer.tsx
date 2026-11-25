@@ -9,7 +9,7 @@ export function Footer({ lang, c }: { lang: Lang; c: Content }) {
   const u = c.ui;
   const groups = [
     { title: u.footer.work, links: [[u.nav.experience, "/experience"], [u.nav.projects, "/projects"], [u.footer.caseStudy, "/projects/athathi"], [u.nav.about, "/about"]] },
-    { title: u.footer.together, links: [[u.nav.speaking, "/speaking"], [u.footer.clarity, "/book"], [u.nav.tools, "/tools"], [u.nav.contact, "/contact"]] },
+    { title: u.footer.together, links: [[u.nav.speaking, "/speaking"], [u.footer.clarity, "/book#form"], [u.nav.tools, "/tools"], [u.nav.contact, "/contact#form"]] },
   ];
   return (
     <footer className="mt-24 border-t border-line bg-navy/40">

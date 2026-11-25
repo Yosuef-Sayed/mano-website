@@ -100,7 +100,7 @@ export function PlannerTool({ lang, t }: { lang: Lang; t: T }) {
         <div className="card flex flex-wrap items-center justify-between gap-4 p-6">
           <p className="font-semibold">{r.next}</p>
           <div className="flex flex-wrap gap-3">
-            <Link href={lh(lang, "/book")} className="btn btn-primary">{r.nextCta} <ArrowRight /></Link>
+            <Link href={lh(lang, "/book#form")} className="btn btn-primary">{r.nextCta} <ArrowRight /></Link>
             <button type="button" className="btn btn-secondary" onClick={() => setState("idle")}>{r.again}</button>
           </div>
         </div>

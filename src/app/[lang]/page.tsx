@@ -48,7 +48,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             <p className="mt-6 font-display text-lg font-bold text-teal sm:text-xl" data-reveal>{c.identity.role}</p>
             <p className="mt-1 text-xs font-semibold tracking-[0.28em] text-paper/60 uppercase sm:text-sm" data-reveal>{c.identity.supporting}</p>
             <div className="mt-8 flex flex-wrap items-center gap-3" data-reveal>
-              <Link href={lh(lang, "/contact?intent=hiring")} className="btn btn-primary">{c.ui.discuss} <ArrowRight /></Link>
+              <Link href={lh(lang, "/contact?intent=hiring#form")} className="btn btn-primary">{c.ui.discuss} <ArrowRight /></Link>
               <Link href={lh(lang, "/projects")} className="btn btn-secondary">{c.ui.explore}</Link>
               <a href={site.cv.path} download className="btn btn-ghost"><Download /> {c.ui.downloadCv}</a>
               <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" aria-label={`LinkedIn ${c.ui.opensNewTab}`}>
@@ -127,9 +127,9 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         title={c.cta.defaultTitle}
         text={c.cta.defaultText}
         actions={[
-          { label: c.cta.discuss, href: "/contact?intent=hiring" },
-          { label: c.cta.session, href: "/book" },
-          { label: c.cta.contact, href: "/contact?intent=general" },
+          { label: c.cta.discuss, href: "/contact?intent=hiring#form" },
+          { label: c.cta.session, href: "/book#form" },
+          { label: c.cta.contact, href: "/contact?intent=general#form" },
         ]}
       />
     </>

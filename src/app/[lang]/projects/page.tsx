@@ -25,8 +25,8 @@ export default async function ProjectsPage({ params }: PageProps<"/[lang]/projec
         lang={lang}
         title={p.ctaTitle}
         actions={[
-          { label: c.cta.discuss, href: "/contact?intent=collaboration" },
-          { label: c.cta.session, href: "/book" },
+          { label: c.cta.discuss, href: "/contact?intent=collaboration#form" },
+          { label: c.cta.session, href: "/book#form" },
         ]}
       />
     </>

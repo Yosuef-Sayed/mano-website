@@ -84,7 +84,7 @@ export default async function ExperiencePage({ params }: PageProps<"/[lang]/expe
         title={x.ctaTitle}
         text={x.ctaText}
         actions={[
-          { label: c.cta.discuss, href: "/contact?intent=hiring" },
+          { label: c.cta.discuss, href: "/contact?intent=hiring#form" },
           { label: c.ui.explore, href: "/projects" },
         ]}
       />

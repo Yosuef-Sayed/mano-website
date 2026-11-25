@@ -46,7 +46,7 @@ export default async function BookPage({ params, searchParams }: PageProps<"/[la
             </ul>
           </div>
         </aside>
-        <div className="card p-6 sm:p-8">
+        <div id="form" className="card scroll-mt-28 p-6 sm:p-8">
           <BookingForm key={session} lang={lang} f={c.forms} initialSession={session} />
         </div>
       </section>

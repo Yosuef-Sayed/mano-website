@@ -28,7 +28,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  scroll-padding-top: 1rem; /* anchors add their own scroll-mt for the sticky header */
 }
 
 body {

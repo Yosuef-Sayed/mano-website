@@ -152,9 +152,9 @@ export const en = {
       eyebrow: "Find your way in",
       title: "What brings you here?",
       items: [
-        { who: "Recruiters & companies", text: "Hiring for AI application, software or junior technical roles and internships.", href: "/contact?intent=hiring", cta: "Discuss an Opportunity" },
+        { who: "Recruiters & companies", text: "Hiring for AI application, software or junior technical roles and internships.", href: "/contact?intent=hiring#form", cta: "Discuss an Opportunity" },
         { who: "Event organizers", text: "Looking for a talk or workshop on practical AI or tech entrepreneurship.", href: "/speaking", cta: "See speaking topics" },
-        { who: "Students & early founders", text: "Working on a graduation project or startup idea and want a clearer next step.", href: "/book", cta: "Request a Session" },
+        { who: "Students & early founders", text: "Working on a graduation project or startup idea and want a clearer next step.", href: "/book#form", cta: "Request a Session" },
         { who: "Builders & business owners", text: "Want a quick, evidence-based look at how clearly your website communicates.", href: "/tools", cta: "Try the free tools" },
       ],
     },

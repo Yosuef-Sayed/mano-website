@@ -8,6 +8,8 @@ import { getContent } from "@/content";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { RevealController } from "@/components/Reveal";
+import { HashScroll } from "@/components/HashScroll";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", display: "swap", weight: ["600", "700", "800", "900"] });
@@ -77,6 +79,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     <html
       lang={lang}
       dir={dirOf(lang)}
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${archivo.variable} ${brush.variable} ${arabicDisplay.variable} ${arabicBody.variable}`}
     >
       <body className="min-h-dvh">
@@ -85,6 +88,9 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         <main id="main">{children}</main>
         <Footer lang={lang} c={c} />
         <RevealController />
+        <Suspense fallback={null}>
+          <HashScroll />
+        </Suspense>
       </body>
     </html>
   );

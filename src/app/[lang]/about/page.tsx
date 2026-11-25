@@ -103,7 +103,7 @@ export default async function About({ params }: PageProps<"/[lang]/about">) {
         title={c.cta.defaultTitle}
         text={c.cta.defaultText}
         actions={[
-          { label: c.cta.discuss, href: "/contact?intent=hiring" },
+          { label: c.cta.discuss, href: "/contact?intent=hiring#form" },
           { label: c.cta.speak, href: "/speaking" },
         ]}
       />

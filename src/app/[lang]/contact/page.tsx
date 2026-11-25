@@ -25,7 +25,7 @@ export default async function ContactPage({ params, searchParams }: PageProps<"/
     <>
       <PageHero eyebrow={k.eyebrow} title={k.title} lead={k.lead} />
       <section className="container-x grid gap-10 lg:grid-cols-[0.7fr_1.3fr]">
-        <aside className="space-y-8">
+        <aside className="order-2 space-y-8 lg:order-1">
           <div>
             <p className="eyebrow">{k.direct}</p>
             <ul className="mt-4 space-y-3">
@@ -39,7 +39,7 @@ export default async function ContactPage({ params, searchParams }: PageProps<"/
             <SocialLinks variant="list" className="mt-4" label={c.ui.socialLabel} newTab={c.ui.opensNewTab} />
           </div>
         </aside>
-        <div className="card p-6 sm:p-8">
+        <div id="form" className="card order-1 scroll-mt-28 p-6 sm:p-8 lg:order-2">
           <ContactHub key={intent} lang={lang} f={c.forms} intents={k.intents} legend={k.intentLegend} initialIntent={intent} />
         </div>
       </section>

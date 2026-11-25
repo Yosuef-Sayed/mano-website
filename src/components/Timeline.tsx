@@ -7,6 +7,7 @@ import { lh, type Lang } from "@/i18n/config";
 import { ArrowRight, Check, Chevron, FileIcon } from "./Icons";
 import { OrgMark } from "./OrgMark";
 import { StatusBadge } from "./ui";
+import { CertificateButton } from "./CertificateViewer";
 
 type X = Content["experience"];
 type Entry = X["timeline"]["entries"][number];
@@ -22,7 +23,7 @@ const ym = (s: string) => {
  * alternating milestone cards, a scroll-driven progress line and a highlighted active milestone.
  * Each milestone can expand to show what was actually done.
  */
-export function Timeline({ lang, x, logos }: { lang: Lang; x: X; logos: Record<string, string> }) {
+export function Timeline({ lang, x, logos, viewer }: { lang: Lang; x: X; logos: Record<string, string>; viewer: Content["ui"]["viewer"] }) {
   const t = x.timeline;
   const wrap = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<string>("");
@@ -180,9 +181,9 @@ export function Timeline({ lang, x, logos }: { lang: Lang; x: X; logos: Record<s
                           <Link href={lh(lang, e.href)} className="inline-flex items-center gap-1.5 text-teal">{t.openCase} <ArrowRight /></Link>
                         )}
                         {"certificate" in e && e.certificate && (
-                          <a href={e.certificate} target="_blank" rel="noopener" className="inline-flex items-center gap-1.5 text-paper/80 hover:text-teal">
+                          <CertificateButton src={e.certificate} title={e.role} subtitle={`${e.org} · ${e.date}`} labels={viewer} className="inline-flex items-center gap-1.5 text-paper/80 hover:text-teal">
                             <FileIcon /> {t.evidence}
-                          </a>
+                          </CertificateButton>
                         )}
                       </div>
                     </article>

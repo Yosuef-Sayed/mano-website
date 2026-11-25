@@ -6,6 +6,7 @@ import { lh } from "@/i18n/config";
 import { resolveLang } from "@/i18n/server";
 import { pageMeta } from "@/lib/seo";
 import { ChapterRail } from "@/components/ChapterRail";
+import { ProjectCover } from "@/components/ProjectCover";
 import { CtaBand, StatusBadge } from "@/components/ui";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/projects/athathi">): Promise<Metadata> {
@@ -59,7 +60,8 @@ export default async function Athathi({ params }: PageProps<"/[lang]/projects/at
       <header className="relative overflow-hidden grain">
         <div aria-hidden className="pointer-events-none absolute -start-40 -top-24 size-[36rem] rounded-full bg-amber/15 blur-[120px]" />
         <div aria-hidden className="pointer-events-none absolute -end-40 top-20 size-[30rem] rounded-full bg-teal/10 blur-[120px]" />
-        <div className="container-x relative pb-16 pt-14 sm:pt-20">
+        <div className="container-x relative grid items-end gap-10 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.3fr_1fr]">
+          <div>
           <nav aria-label="Breadcrumb" className="text-sm text-muted">
             <Link href={lh(lang, "/projects")} className="hover:text-teal">{c.ui.breadcrumbProjects}</Link> <span aria-hidden>/</span> <span className="latin">ATHATHI</span>
           </nav>
@@ -71,6 +73,8 @@ export default async function Athathi({ params }: PageProps<"/[lang]/projects/at
             <span className="tag">{a.roleTag}</span>
             <span className="tag">{a.teamTag}</span>
           </div>
+          </div>
+          <ProjectCover id="athathi" label={c.projects.illustration} className="hidden aspect-[4/3] lg:block" />
         </div>
       </header>
 

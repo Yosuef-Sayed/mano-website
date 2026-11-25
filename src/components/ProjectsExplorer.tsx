@@ -6,63 +6,10 @@ import type { Content } from "@/content";
 import { lh, type Lang } from "@/i18n/config";
 import { ArrowRight, ArrowUpRight, Chevron } from "./Icons";
 import { StatusBadge } from "./ui";
+import { ProjectCover } from "./ProjectCover";
 
 type P = Content["projects"];
 type Item = P["items"][number];
-
-/** Restrained symbol per project. Decorative only — never presented as a screenshot. */
-function Symbol({ kind }: { kind: string }) {
-  const c = "#14B8A6";
-  const dim = "rgb(237 237 237 / .18)";
-  switch (kind) {
-    case "grid":
-      return (
-        <svg viewBox="0 0 60 60" className="size-16">
-          {[0, 1, 2].flatMap((r) => [0, 1, 2].map((q) => <rect key={`${r}${q}`} x={4 + q * 18} y={4 + r * 18} width="14" height="14" rx="2" fill="none" stroke={(r + q) % 4 === 0 ? c : dim} strokeWidth="1.5" />))}
-        </svg>
-      );
-    case "wave":
-      return (
-        <svg viewBox="0 0 80 40" className="h-12 w-24">
-          {[6, 14, 22, 30, 10, 26, 18, 8, 28, 16, 24, 12].map((h, i) => <rect key={i} x={2 + i * 6.5} y={20 - h / 2} width="3" height={h} rx="1.5" fill={i % 3 === 0 ? c : dim} />)}
-        </svg>
-      );
-    case "pixels":
-      return (
-        <svg viewBox="0 0 60 60" className="size-16">
-          {Array.from({ length: 36 }).map((_, i) => <rect key={i} x={(i % 6) * 10 + 1} y={Math.floor(i / 6) * 10 + 1} width="8" height="8" fill={[7, 14, 21, 28, 9, 16].includes(i) ? c : dim} opacity={0.4 + ((i * 7) % 6) / 10} />)}
-        </svg>
-      );
-    case "ledger":
-      return (
-        <svg viewBox="0 0 60 60" className="size-16" fill="none" strokeWidth="1.5">
-          {[12, 22, 32, 42].map((y, i) => <line key={y} x1="6" x2={i === 3 ? 34 : 54} y1={y} y2={y} stroke={i === 3 ? c : dim} />)}
-          <path d="M40 46l6-6 6 6" stroke={c} />
-        </svg>
-      );
-    default:
-      return (
-        <svg viewBox="0 0 80 60" className="h-14 w-20" fill="none" strokeWidth="1.5">
-          {[[14, 30], [40, 12], [66, 30], [40, 48]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="5" stroke={c} />)}
-          <path d="M19 30h16M45 12l17 15M45 48l17-15M40 17v26" stroke={dim} />
-        </svg>
-      );
-  }
-}
-
-function Cover({ p }: { p: Item }) {
-  return (
-    <div className="relative flex h-36 flex-col justify-between overflow-hidden rounded-xl border border-line bg-gradient-to-br from-navy to-ink p-4">
-      <div className="flex flex-wrap gap-1.5">
-        {p.labels.map((l) => <span key={l} className="rounded bg-ink/70 px-2 py-0.5 text-[10px] font-semibold tracking-wider text-teal uppercase">{l}</span>)}
-      </div>
-      <div className="flex items-end justify-between gap-3">
-        <span className="latin font-display text-2xl font-extrabold leading-none text-paper/90">{p.name}</span>
-        <span aria-hidden className="shrink-0 opacity-90"><Symbol kind={p.symbol} /></span>
-      </div>
-    </div>
-  );
-}
 
 function ProjectCard({ p, t, lang }: { p: Item; t: P; lang: Lang }) {
   const [more, setMore] = useState(false);
@@ -71,7 +18,7 @@ function ProjectCard({ p, t, lang }: { p: Item; t: P; lang: Lang }) {
   return (
     <article id={p.id} className="card flex h-full scroll-mt-28 flex-col p-5 sm:p-6">
       {p.id === "manopix" && <span id="cpp" className="relative -top-28 block" />}
-      <Cover p={p} />
+      <ProjectCover id={p.id} label={t.illustration} tags={p.labels} className="aspect-[16/9]" />
       <p className="mt-2 text-[11px] text-muted">{t.noDemo}</p>
       <h3 className="mt-3 text-2xl font-bold latin">{p.name}</h3>
       <p className="text-sm text-muted">{p.subtitle}{p.team ? ` · ${p.team}` : ""}</p>
@@ -142,11 +89,14 @@ export function ProjectsExplorer({ lang, t }: { lang: Lang; t: P }) {
               {t.readCaseStudy} <ArrowRight className="size-4" />
             </span>
           </div>
-          <ul className="relative mt-8 space-y-3 lg:mt-0">
-            {featured.features.map((f) => (
-              <li key={f} className="rounded-xl border border-line bg-ink/50 px-4 py-3 text-sm text-paper/85">{f}</li>
-            ))}
-          </ul>
+          <div className="relative mt-8 lg:mt-0">
+            <ProjectCover id="athathi" label={t.illustration} tags={featured.labels} className="aspect-[16/10]" />
+            <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+              {featured.features.map((f) => (
+                <li key={f} className="rounded-xl border border-line bg-ink/50 px-3 py-2 text-xs text-paper/85">{f}</li>
+              ))}
+            </ul>
+          </div>
         </Link>
       )}
 

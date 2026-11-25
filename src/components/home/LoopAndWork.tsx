@@ -8,9 +8,10 @@ import { lh, type Lang } from "@/i18n/config";
 import { ValueLoop } from "./ValueLoop";
 import { SectionHead } from "../ui";
 import { ArrowRight } from "../Icons";
+import { ProjectCover } from "../ProjectCover";
 
 /** Featured work first (what visitors came for), then the Value Loop that explains how it connects. */
-export function LoopAndWork({ lang, home, dimensions }: { lang: Lang; home: Content["home"]; dimensions: Content["dimensions"] }) {
+export function LoopAndWork({ lang, home, dimensions, illustration }: { lang: Lang; home: Content["home"]; dimensions: Content["dimensions"]; illustration: string }) {
   const [selected, setSelected] = useState<DimensionId>("technology");
   const [highlight, setHighlight] = useState(false);
   const sel = dimensions.find((d) => d.id === selected) ?? dimensions[0];
@@ -58,6 +59,7 @@ export function LoopAndWork({ lang, home, dimensions }: { lang: Lang; home: Cont
                   <span dir="auto" className="text-xs font-semibold tracking-wide text-muted uppercase">{it.kicker}</span>
                   <span className={`h-display mt-3 ${big ? "latin text-4xl lg:text-6xl" : "text-2xl"}`}>{it.title}</span>
                   <span className={`mt-3 text-paper/75 ${big ? "max-w-xl text-lg" : "text-sm"}`}>{it.why}</span>
+                  {big && <ProjectCover id="athathi" label={illustration} className="mt-6 aspect-[16/7] w-full" />}
                   <span className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6">
                     <span className="flex flex-wrap gap-1.5">
                       {it.dims.map((d) => (

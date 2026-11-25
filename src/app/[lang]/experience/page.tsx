@@ -6,6 +6,7 @@ import { getContent } from "@/content";
 import { resolveLang } from "@/i18n/server";
 import { pageMeta } from "@/lib/seo";
 import { Timeline } from "@/components/Timeline";
+import { CertificateButton } from "@/components/CertificateViewer";
 import { CtaBand, PageHero, SectionHead } from "@/components/ui";
 import { Download, FileIcon } from "@/components/Icons";
 
@@ -41,7 +42,7 @@ export default async function ExperiencePage({ params }: PageProps<"/[lang]/expe
 
       <section className="container-x" aria-labelledby="timeline-title">
         <h2 id="timeline-title" className="sr-only">{x.timeline.title}</h2>
-        <Timeline lang={lang} x={x} logos={availableLogos()} />
+        <Timeline lang={lang} x={x} logos={availableLogos()} viewer={c.ui.viewer} />
       </section>
 
       <section className="container-x mt-24" aria-labelledby="edu-title">
@@ -67,9 +68,9 @@ export default async function ExperiencePage({ params }: PageProps<"/[lang]/expe
                 <p className="text-sm text-muted">{t.issuer} · {t.kind}</p>
               </div>
               {t.certificate ? (
-                <a href={t.certificate} target="_blank" rel="noopener" className="inline-flex items-center gap-1.5 text-sm font-semibold text-teal">
+                <CertificateButton src={t.certificate} title={t.name} subtitle={`${t.issuer} · ${t.kind} · ${t.date}`} labels={c.ui.viewer} className="inline-flex items-center gap-1.5 text-sm font-semibold text-teal">
                   <FileIcon /> {x.viewCertificate}
-                </a>
+                </CertificateButton>
               ) : <span />}
               <p className="font-display text-sm font-bold text-paper/80">{t.date}</p>
             </li>

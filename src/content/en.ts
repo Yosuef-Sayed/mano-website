@@ -55,6 +55,7 @@ export const en = {
       title: "This page doesn't exist.",
       lead: "The link may be outdated. Here are a few places to start.",
     },
+    viewer: { close: "Close", download: "Download", zoom: "Zoom in", fit: "Fit to screen", certificate: "Certificate" },
     breadcrumbProjects: "Projects",
     current: "Current",
     present: "Present",
@@ -458,6 +459,7 @@ export const en = {
     showFewer: "Show fewer",
     caseStudy: "Case study",
     repository: "Repository",
+    illustration: "Illustration",
     noDemo: "Project overview — no live demo",
     items: [
       {

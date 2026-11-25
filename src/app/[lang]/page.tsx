@@ -71,7 +71,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         </div>
       </section>
 
-      <LoopAndWork lang={lang} home={h} dimensions={c.dimensions} />
+      <LoopAndWork lang={lang} home={h} dimensions={c.dimensions} illustration={c.projects.illustration} />
 
       {/* JOURNEY TEASER */}
       <section className="container-x mt-24 sm:mt-32" aria-labelledby="journey-title">

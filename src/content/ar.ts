@@ -57,6 +57,7 @@ export const ar: DeepWiden<EnContent> = {
       title: "الصفحة دي مش موجودة.",
       lead: "ممكن يكون اللينك قديم. ابدأ من هنا:",
     },
+    viewer: { close: "اقفل", download: "نزّل", zoom: "كبّر", fit: "على قد الشاشة", certificate: "الشهادة" },
     breadcrumbProjects: "المشاريع",
     current: "حالي",
     present: "لحد دلوقتي",
@@ -460,6 +461,7 @@ export const ar: DeepWiden<EnContent> = {
     showFewer: "اعرض أقل",
     caseStudy: "دراسة الحالة",
     repository: "الـ Repository",
+    illustration: "رسم توضيحي",
     noDemo: "عرض للمشروع — مفيش ديمو مباشر",
     items: [
       {

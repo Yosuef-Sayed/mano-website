@@ -83,7 +83,7 @@ In `speaking.topics`: `id`, `title`, `audience` (list), `content` (list), `forma
 
 ## Recording a delivered speaking engagement
 Only after it has actually happened:
-1. Add a timeline milestone (lane `learning` or `leadership`, type "Talk" or "Workshop") with the real date, organizer and a verified result (e.g. "Delivered to ~40 students" only if you know the number).
+1. Add a timeline milestone (type "Talk" or "Workshop") with the real date, organizer and a verified result (e.g. "Delivered to ~40 students" only if you know the number).
 2. Optionally add a photo you own to `public/images/` and link it.
 3. Optionally mention it in `speaking.lead`. Never list a talk that hasn't happened.
 

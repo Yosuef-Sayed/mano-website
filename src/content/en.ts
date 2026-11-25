@@ -890,7 +890,7 @@ export const en = {
 
   tools: {
     metaTitle: "Free Tools — Built for Better Decisions",
-    metaDescription: "Free, focused tools to help founders, students and business owners evaluate website clarity and plan project ideas.",
+    metaDescription: "Free, focused tools for founders, students and business owners — starting with a website clarity and basic on-page SEO check.",
     eyebrow: "Free tools · Beta",
     title: "Free Tools — Built for Better Decisions",
     lead: "Practical tools to help founders, students, and business owners evaluate ideas, improve digital presence, and make clearer decisions.",

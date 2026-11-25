@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { getContent } from "@/content";
 import { lh } from "@/i18n/config";
 import { resolveLang } from "@/i18n/server";
@@ -21,7 +22,8 @@ export default async function PlannerPage({ params }: PageProps<"/[lang]/tools/p
   const lang = await resolveLang(params);
   const c = getContent(lang);
   const t = c.tools;
-  const available = aiEnabled();
+  // Not listed or reachable until it can actually run (no placeholder page).
+  if (!aiEnabled()) notFound();
   return (
     <>
       <PageHero eyebrow={t.eyebrow} title={t.planner.name} lead={t.planner.short}>
@@ -29,7 +31,7 @@ export default async function PlannerPage({ params }: PageProps<"/[lang]/tools/p
       </PageHero>
       <section className="container-x grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="card p-6 sm:p-8">
-          {available ? <PlannerTool lang={lang} t={t} /> : <p className="text-paper/80">{t.errors.unavailable}</p>}
+          <PlannerTool lang={lang} t={t} />
         </div>
         <aside><ToolInfo info={t.planner} labels={t.infoLabels} /></aside>
       </section>

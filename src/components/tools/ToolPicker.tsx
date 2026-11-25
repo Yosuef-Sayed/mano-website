@@ -8,9 +8,10 @@ import { ArrowRight } from "../Icons";
 
 /** Goal-first: the visitor picks what they want to do, and the matching tool is highlighted. */
 export function ToolPicker({ lang, t, plannerAvailable }: { lang: Lang; t: Content["tools"]; plannerAvailable: boolean }) {
+  // Only working tools are listed. The planner appears automatically once its AI key is configured.
   const tools = [
     { id: "website-audit", data: t.audit, available: true },
-    { id: "project-planner", data: t.planner, available: plannerAvailable },
+    ...(plannerAvailable ? [{ id: "project-planner", data: t.planner, available: true }] : []),
   ];
   const [sel, setSel] = useState("website-audit");
   return (
@@ -21,7 +22,7 @@ export function ToolPicker({ lang, t, plannerAvailable }: { lang: Lang; t: Conte
           <button key={x.id} type="button" className="chip" aria-pressed={sel === x.id} onClick={() => setSel(x.id)}>{x.data.goal}</button>
         ))}
       </div>
-      <ul className="mt-8 grid gap-5 md:grid-cols-2">
+      <ul className={`mt-8 grid gap-5 ${tools.length > 1 ? "md:grid-cols-2" : "max-w-2xl"}`}>
         {tools.map((x) => {
           const on = sel === x.id;
           return (
